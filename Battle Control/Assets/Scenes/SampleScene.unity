@@ -152,7 +152,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d97c2b45bc1cc4498125306f9417f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: Name
   characterLevel: 1
+  HP_Base: 10
+  ATK_Base: 10
+  DEF_Base: 10
+  SPD_Base: 10
+  MP_Base: 10
+  MAG_Base: 10
+  RES_Base: 10
+  ACC_Base: 10
+  BRV_Base: 10
+  CHA_Base: 10
+  COM_Base: 10
+  SKL_Base: 10
+  HP_Growth: 3
+  ATK_Growth: 3
+  DEF_Growth: 3
+  SPD_Growth: 3
+  MP_Growth: 3
+  MAG_Growth: 3
+  RES_Growth: 3
+  ACC_Growth: 3
+  BRV_Growth: 3
+  CHA_Growth: 3
+  COM_Growth: 3
+  SKL_Growth: 3
+  HP_Bonus: 0
+  ATK_Bonus: 0
+  DEF_Bonus: 0
+  SPD_Bonus: 0
+  MP_Bonus: 0
+  MAG_Bonus: 0
+  RES_Bonus: 0
+  ACC_Bonus: 0
+  BRV_Bonus: 0
+  CHA_Bonus: 0
+  COM_Bonus: 0
+  SKL_Bonus: 0
+  HP: 0
+  ATK: 0
+  DEF: 0
+  SPD: 0
+  MP: 0
+  MAG: 0
+  RES: 0
+  ACC: 0
+  BRV: 0
+  CHA: 0
+  COM: 0
+  SKL: 0
+  ATK_Stage: 0
+  DEF_Stage: 0
+  SPD_Stage: 0
+  MAG_Stage: 0
+  RES_Stage: 0
+  ACC_Stage: 0
+  BRV_Stage: 0
+  CHA_Stage: 0
+  COM_Stage: 0
+  SKL_Stage: 0
 --- !u!4 &101301946
 Transform:
   m_ObjectHideFlags: 0
