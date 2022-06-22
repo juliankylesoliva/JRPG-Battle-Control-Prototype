@@ -22,6 +22,7 @@ public class CharacterStats : MonoBehaviour
 
     const int STAT_BONUS_DIVIDER = 5;
     const int STAT_CHANGE_CONSTANT = 3;
+    const int MAX_STAT_CHANGES = 3;
 
     [Header("BASIC INFO")]
     [SerializeField] string characterName = "Name";
@@ -70,10 +71,12 @@ public class CharacterStats : MonoBehaviour
     [SerializeField, Range(0, 250)] int SKL_Bonus = 0;
 
     [Header("CURRENT STAT VALUES")]
+    [SerializeField] int HP_Current;
     [SerializeField] int HP;
     [SerializeField] int ATK;
     [SerializeField] int DEF;
     [SerializeField] int SPD;
+    [SerializeField] int MP_Current;
     [SerializeField] int MP;
     [SerializeField] int MAG;
     [SerializeField] int RES;
@@ -94,6 +97,13 @@ public class CharacterStats : MonoBehaviour
     [SerializeField, Range(-3, 3)] int CHA_Stage = 0;
     [SerializeField, Range(-3, 3)] int COM_Stage = 0;
     [SerializeField, Range(-3, 3)] int SKL_Stage = 0;
+
+    void Start()
+    {
+        UpdateAllStats();
+        UpdateCurrentHP();
+        UpdateCurrentMP();
+    }
 
     void Update()
     {
@@ -179,6 +189,33 @@ public class CharacterStats : MonoBehaviour
         UpdateStat(Stat.SKL);
     }
 
+    private void UpdateCurrentHP()
+    {
+        HP_Current = HP;
+    }
+
+    private void UpdateCurrentMP()
+    {
+        MP_Current = MP;
+    }
+
+    private int HPMPChangeHelper(int currentAmount, int changeAmount, int minAmountRemaining, int maxAmountRemaining)
+    {
+        int diff = currentAmount + changeAmount;
+        if (diff >= minAmountRemaining && diff <= maxAmountRemaining)
+        {
+            return diff;
+        }
+        else if (diff < minAmountRemaining)
+        {
+            return minAmountRemaining;
+        }
+        else
+        {
+            return maxAmountRemaining;
+        }
+    }
+
     /* PUBLIC METHODS */
     public int GetUnmoddedStat(Stat stat)
     {
@@ -256,5 +293,116 @@ public class CharacterStats : MonoBehaviour
             default:
                 return -1;
         }
+    }
+
+    public int GetCurrentHP()
+    {
+        UpdateCurrentHP();
+        return HP_Current;
+    }
+    
+    public void ChangeHP(int amount)
+    {
+        HP_Current = HPMPChangeHelper(HP_Current, amount, 0, HP);
+    }
+
+    public int GetCurrentMP()
+    {
+        UpdateCurrentMP();
+        return MP_Current;
+    }
+
+    public void ChangeMP(int amount)
+    {
+        MP_Current = HPMPChangeHelper(MP_Current, amount, 0, MP);
+    }
+
+    public void ChangeStatStage(Stat stat, int amount)
+    {
+        if (amount > MAX_STAT_CHANGES || amount < -MAX_STAT_CHANGES) { return; }
+
+        switch (stat)
+        {
+            case Stat.ATK:
+                ATK_Stage += amount;
+                break;
+            case Stat.DEF:
+                DEF_Stage += amount;
+                break;
+            case Stat.MAG:
+                MAG_Stage += amount;
+                break;
+            case Stat.RES:
+                RES_Stage += amount;
+                break;
+            case Stat.ACC:
+                ACC_Stage += amount;
+                break;
+            case Stat.BRV:
+                BRV_Stage += amount;
+                break;
+            case Stat.CHA:
+                CHA_Stage += amount;
+                break;
+            case Stat.COM:
+                COM_Stage += amount;
+                break;
+            case Stat.SKL:
+                SKL_Stage += amount;
+                break;
+            default:
+                return;
+        }
+
+        UpdateAllStats();
+    }
+
+    public void AddBonusStat(Stat stat, int amount)
+    {
+        if (amount <= 0) { return; }
+
+        switch (stat)
+        {
+            case Stat.HP:
+                HP_Bonus += amount;
+                break;
+            case Stat.ATK:
+                ATK_Bonus += amount;
+                break;
+            case Stat.DEF:
+                DEF_Bonus += amount;
+                break;
+            case Stat.SPD:
+                SPD_Bonus += amount;
+                break;
+            case Stat.MP:
+                MP_Bonus += amount;
+                break;
+            case Stat.MAG:
+                MAG_Bonus += amount;
+                break;
+            case Stat.RES:
+                RES_Bonus += amount;
+                break;
+            case Stat.ACC:
+                ACC_Bonus += amount;
+                break;
+            case Stat.BRV:
+                BRV_Bonus += amount;
+                break;
+            case Stat.CHA:
+                CHA_Bonus += amount;
+                break;
+            case Stat.COM:
+                COM_Bonus += amount;
+                break;
+            case Stat.SKL:
+                SKL_Bonus += amount;
+                break;
+            default:
+                break;
+        }
+
+        UpdateAllStats();
     }
 }

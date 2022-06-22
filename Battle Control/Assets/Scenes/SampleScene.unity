@@ -190,10 +190,12 @@ MonoBehaviour:
   CHA_Bonus: 0
   COM_Bonus: 0
   SKL_Bonus: 0
+  HP_Current: 0
   HP: 0
   ATK: 0
   DEF: 0
   SPD: 0
+  MP_Current: 0
   MP: 0
   MAG: 0
   RES: 0
