@@ -273,9 +273,49 @@ public class BattleSystem : MonoBehaviour
         return true;
     }
 
-    // Public function for selecting an action for a unit to take
+    // Public functions for selecting/deselecting/starting/getting the current action
     public void SelectAction(ActionScript action)
     {
-        currentAction = action;
+        if (currentAction == null)
+        {
+            currentAction = action;
+            currentAction.InitiateAction();
+        }
+    }
+
+    public void DeselectAction()
+    {
+        if (currentAction != null)
+        {
+            currentAction.CancelAction();
+            currentAction = null;
+        }
+    }
+
+    public void StartAction()
+    {
+        if (currentAction != null)
+        {
+            currentAction.ConfirmAction();
+            battleMenu.ClearStackStandby();
+            currentAction = null;
+        }
+    }
+
+    public ActionScript GetCurrentAction()
+    {
+        return currentAction;
+    }
+
+    // Public function for returning the current battle state
+    public BattleState GetCurrentBattleState()
+    {
+        return currentState;
+    }
+
+    // Public function for returning the current turn index
+    public int GetCurrentTurnIndex()
+    {
+        return currentTurn;
     }
 }

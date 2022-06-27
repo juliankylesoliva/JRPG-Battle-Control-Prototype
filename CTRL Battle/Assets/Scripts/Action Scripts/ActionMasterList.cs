@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionMasterList : MonoBehaviour
 {
-    [SerializeField] ActionScript[] normalActionPrefabs;
+    [SerializeField] GameObject[] normalActionPrefabs;
 
     private static Dictionary<string, ActionScript> actionsList = null;
 
@@ -16,8 +16,9 @@ public class ActionMasterList : MonoBehaviour
     private void InitializeActionsList()
     {
         actionsList = new Dictionary<string, ActionScript>();
-        foreach (ActionScript action in normalActionPrefabs)
+        foreach (GameObject actionObj in normalActionPrefabs)
         {
+            ActionScript action = Instantiate(actionObj).GetComponent<ActionScript>();
             actionsList.Add(action.GetType().Name, action);
         }
     }

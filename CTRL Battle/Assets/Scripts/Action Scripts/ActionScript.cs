@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class ActionScript : MonoBehaviour
 {
+    public ActionParams actionParameters;
+
     private BattleSystem battleSystem;
 
     private bool isWaiting = false;
@@ -49,6 +51,7 @@ public abstract class ActionScript : MonoBehaviour
         isActionConfirmed = false;
         isWaiting = true;
 
+        Debug.Log("Action Waiting...");
         while (!isActionConfirmed)
         {
             isWaiting = true;
@@ -56,6 +59,7 @@ public abstract class ActionScript : MonoBehaviour
             {
                 isActionCancelled = false;
                 isWaiting = false;
+                Debug.Log("Action Cancelled!");
                 yield break;
             }
             else
@@ -63,6 +67,7 @@ public abstract class ActionScript : MonoBehaviour
                 yield return null;
             }
         }
+        Debug.Log("Action Confirmed!");
 
         isActionConfirmed = false;
         isWaiting = false;

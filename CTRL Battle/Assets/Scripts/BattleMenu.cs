@@ -31,25 +31,27 @@ public class BattleMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (currentMenuState == MenuState.HOME) // Guard
+            if (currentMenuState == MenuState.HOME) // Initiate Guard
             {
-                Debug.Log("[SPACE]: Guard | [LShift]: Cancel");
+                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("Guard"));
                 GoToNextMenu(MenuState.GUARD_CONFIRMATION);
             }
             else // Go back
             {
+                battleSystem.DeselectAction();
                 GoToPreviousMenu();
             }
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (currentMenuState == MenuState.HOME) // Melee attack
+            if (currentMenuState == MenuState.HOME) // Initiate Melee attack
             {
                 battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("MeleeAttack"));
+                GoToNextMenu(MenuState.TARGET_MODE);
             }
             else if (currentMenuState == MenuState.GUARD_CONFIRMATION) // Confirm Guard
             {
-
+                battleSystem.StartAction();
             }
             else {/* Nothing */}
         }
@@ -61,6 +63,7 @@ public class BattleMenu : MonoBehaviour
     {
         previousMenuStates.Add(currentMenuState);
         currentMenuState = nextState;
+        Debug.Log($"Went to {currentMenuState}");
     }
 
     // Helper function for going back in the battle menu
@@ -75,6 +78,12 @@ public class BattleMenu : MonoBehaviour
         }
     }
 
+    // OnClick Button function for setting target mode
+    public void SetToTargetMode()
+    {
+        GoToNextMenu(MenuState.TARGET_MODE);
+    }
+
     // Helper function for clearing the previous state stack and setting the standby state
     public void ClearStackStandby()
     {
@@ -86,5 +95,10 @@ public class BattleMenu : MonoBehaviour
     public void StandbyToHome()
     {
         if (currentMenuState == MenuState.STANDBY) { currentMenuState = MenuState.HOME; }
+    }
+
+    public MenuState GetCurrentMenuState()
+    {
+        return currentMenuState;
     }
 }

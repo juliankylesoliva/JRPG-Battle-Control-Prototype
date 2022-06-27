@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a191e7963b7d604db8a06b838dfac3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 3
-  maxHealth: 3
-  attack: 1
+  CurrentHP: 3
+  MaxHP: 3
+  ATK: 1
+  DEF: 1
+  AGI: 2
