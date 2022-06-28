@@ -265,8 +265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalActionPrefabs:
-  - {fileID: 6363165868579715900, guid: 50adbd55df88db741817e6a1ff62124c, type: 3}
   - {fileID: 7371225419243685277, guid: 8749b0e798254eb42ae0d411337904fd, type: 3}
+  - {fileID: 6363165868579715900, guid: 50adbd55df88db741817e6a1ff62124c, type: 3}
+  - {fileID: 3967434155929113147, guid: be55c7f48967ead4babb3491dad92894, type: 3}
 --- !u!1 &260791646
 GameObject:
   m_ObjectHideFlags: 0

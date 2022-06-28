@@ -46,6 +46,7 @@ public class BattleMenu : MonoBehaviour
         {
             if (currentMenuState == MenuState.HOME) // Initiate Melee attack
             {
+                // NOTE: Melee action script used here may depend on a character's weapon in the future.
                 battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("MeleeAttack"), new BattleUnit[] {battleSystem.GetCurrentUnit()});
                 GoToNextMenu(MenuState.TARGET_MODE);
             }
@@ -54,6 +55,22 @@ public class BattleMenu : MonoBehaviour
                 battleSystem.StartAction();
             }
             else {/* Nothing */}
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (currentMenuState == MenuState.HOME) // Activate projectile mode
+            {
+                if (UnitHasAmmo())
+                {
+                    battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("ProjectileAttack"), new BattleUnit[] { battleSystem.GetCurrentUnit() });
+                    GoToNextMenu(MenuState.TARGET_MODE);
+                }
+                else
+                {
+                    Debug.Log("Out of ammo!");
+                }
+            }
+            // NOTE: Add reload function if player presses Tab again?
         }
         else {/* Nothing */}
     }
@@ -100,5 +117,11 @@ public class BattleMenu : MonoBehaviour
     public MenuState GetCurrentMenuState()
     {
         return currentMenuState;
+    }
+
+    // Helper function for checking a unit's ammo count
+    private bool UnitHasAmmo()
+    {
+        return battleSystem.GetCurrentUnit().AmmoLoaded > 0;
     }
 }

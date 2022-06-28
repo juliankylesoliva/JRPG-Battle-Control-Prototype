@@ -14,7 +14,7 @@ public class BattleCalculator : MonoBehaviour
             }
             else
             {
-                return (int)((float)parameters.Power * CalculateAttackDefenseRatio(attacker.Attack, defender.Defense));
+                return (int)((float)parameters.Power * CalculateAttackDefenseRatio(attacker.Attack, defender.Defense) * CalculateDeviation());
             }
         }
         else if (IsMagicDamage(parameters))
@@ -35,6 +35,11 @@ public class BattleCalculator : MonoBehaviour
     public static float CalculateAttackDefenseRatio(int atkAttacker, int defDefender)
     {
         return ((float)atkAttacker) / ((float)defDefender);
+    }
+
+    public static float CalculateDeviation()
+    {
+        return Random.Range(0.85f, 1f);
     }
 
     public static int CalculateHitRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)

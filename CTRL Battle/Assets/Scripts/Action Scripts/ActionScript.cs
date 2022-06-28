@@ -82,4 +82,13 @@ public abstract class ActionScript : MonoBehaviour
     }
 
     public abstract IEnumerator DoAction();
+
+    protected bool AreAllTargetsDefeated()
+    {
+        foreach (BattleUnit unit in targetUnits)
+        {
+            if (unit != null && !unit.IsDead()) { return false; }
+        }
+        return true;
+    }
 }

@@ -6,6 +6,8 @@ public class MeleeAttack : ActionScript
 {
     public override IEnumerator DoAction()
     {
+        yield return null;
+
         Debug.Log($"{sourceUnits[0].CharacterName} attacks!");
         yield return new WaitForSeconds(1f);
 
@@ -36,7 +38,5 @@ public class MeleeAttack : ActionScript
             Debug.Log($"{targetUnits[0].CharacterName} was defeated!");
             yield return new WaitForSeconds(1f);
         }
-
-        yield return null;
     }
 }

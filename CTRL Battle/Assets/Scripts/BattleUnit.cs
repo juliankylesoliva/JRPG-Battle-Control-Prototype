@@ -7,6 +7,7 @@ public class BattleUnit : MonoBehaviour
     private bool isGuarding = false;
     public bool IsGuarding { get { return isGuarding; } set { isGuarding = value; } }
 
+    [Header("BASIC INFO")]
     [SerializeField] string Name = "Name";
     public string CharacterName
     { 
@@ -14,6 +15,7 @@ public class BattleUnit : MonoBehaviour
         set { Name = EnforceCharacterLimit(value, 16); }
     }
 
+    [Header("PHYSICAL STATS")]
     [SerializeField] int CurrentHP = 10;
     public int Health
     {
@@ -49,6 +51,7 @@ public class BattleUnit : MonoBehaviour
         set { AGI = StatValueRangeHelper(value, 1); }
     }
 
+    [Header("MAGIC STATS")]
     [SerializeField] int CurrentMP = 10;
     public int Magic
     {
@@ -84,6 +87,7 @@ public class BattleUnit : MonoBehaviour
         set { ACC = StatValueRangeHelper(value, 1); }
     }
 
+    [Header("LIFESTYLE STATS")]
     [SerializeField] int BRV = 1;
     public int Bravery
     {
@@ -112,6 +116,28 @@ public class BattleUnit : MonoBehaviour
         set { SKL = StatValueRangeHelper(value, 1); }
     }
 
+    [Header("PROJECTILE STATS")]
+    [SerializeField] int ammoLoaded = 6;
+    public int AmmoLoaded
+    {
+        get { return ammoLoaded; }
+        set { ammoLoaded = HPMPValueRangeHelper(value, 0, maxAmmo); }
+    }
+
+    [SerializeField] int maxAmmo = 6;
+    public int MaxAmmo
+    {
+        get { return maxAmmo; }
+        set { maxAmmo = StatValueRangeHelper(value, 1); }
+    }
+
+    [SerializeField] int reloadRate = 1;
+    public int ReloadRate
+    {
+        get { return reloadRate; }
+        set { reloadRate = HPMPValueRangeHelper(value, 0, maxAmmo); }
+    }
+
     /* GETTER FUNCTIONS */
     public bool IsDead()
     {
@@ -127,6 +153,16 @@ public class BattleUnit : MonoBehaviour
     public void HealUnit(int heal)
     {
         Health += heal;
+    }
+
+    public void FireAmmo()
+    {
+        AmmoLoaded--;
+    }
+
+    public void ReloadAmmo()
+    {
+        AmmoLoaded += ReloadRate;
     }
 
     /* HELPER FUNCTIONS */

@@ -153,3 +153,10 @@ MonoBehaviour:
   MAG: 4
   RES: 2
   ACC: 6
+  BRV: 1
+  CHA: 1
+  COM: 1
+  SKL: 1
+  ammoLoaded: 0
+  maxAmmo: 0
+  reloadRate: 0

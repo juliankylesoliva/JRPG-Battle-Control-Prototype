@@ -212,6 +212,7 @@ public class BattleSystem : MonoBehaviour
         {
             BattleUnit currentUnit = GetCurrentUnit();
             currentUnit.IsGuarding = false;
+            currentUnit.ReloadAmmo();
             Debug.Log($"It's {currentUnit.CharacterName}'s turn...");
             battleMenu.StandbyToHome();
         }
