@@ -33,7 +33,7 @@ public class BattleMenu : MonoBehaviour
         {
             if (currentMenuState == MenuState.HOME) // Initiate Guard
             {
-                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("Guard"));
+                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("Guard"), new BattleUnit[] {battleSystem.GetCurrentUnit()});
                 GoToNextMenu(MenuState.GUARD_CONFIRMATION);
             }
             else // Go back
@@ -46,7 +46,7 @@ public class BattleMenu : MonoBehaviour
         {
             if (currentMenuState == MenuState.HOME) // Initiate Melee attack
             {
-                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("MeleeAttack"));
+                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("MeleeAttack"), new BattleUnit[] {battleSystem.GetCurrentUnit()});
                 GoToNextMenu(MenuState.TARGET_MODE);
             }
             else if (currentMenuState == MenuState.GUARD_CONFIRMATION) // Confirm Guard

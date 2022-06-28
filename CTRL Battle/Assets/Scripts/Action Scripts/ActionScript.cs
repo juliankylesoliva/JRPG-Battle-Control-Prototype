@@ -12,8 +12,8 @@ public abstract class ActionScript : MonoBehaviour
     private bool isActionCancelled = false;
     private bool isActionConfirmed = false;
 
-    private BattleUnit[] sourceUnits = null;
-    private BattleUnit[] targetUnits = null;
+    protected BattleUnit[] sourceUnits = null;
+    protected BattleUnit[] targetUnits = null;
 
     void Awake()
     {
@@ -49,6 +49,8 @@ public abstract class ActionScript : MonoBehaviour
     {
         isActionCancelled = false;
         isActionConfirmed = false;
+        sourceUnits = null;
+        targetUnits = null;
         isWaiting = true;
 
         Debug.Log("Action Waiting...");
@@ -59,6 +61,8 @@ public abstract class ActionScript : MonoBehaviour
             {
                 isActionCancelled = false;
                 isWaiting = false;
+                sourceUnits = null;
+                targetUnits = null;
                 Debug.Log("Action Cancelled!");
                 yield break;
             }

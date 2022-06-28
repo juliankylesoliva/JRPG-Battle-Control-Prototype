@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum TargetingMode { SELF, SINGLE_TEAMMATE, ALL_TEAMMATE, SINGLE_ENEMY, ALL_ENEMY, ALL_UNITS, NONE }
+public enum UnitTargetStatus { ALIVE, DEAD, EITHER, NONE }
 public enum UnitSlotCode { P1, P2, P3, P4, E1, E2, E3, E4, E5, NONE }
 
 public class TargetSystem : MonoBehaviour
@@ -10,7 +11,10 @@ public class TargetSystem : MonoBehaviour
     private BattleMenu battleMenu;
     private BattleSystem battleSystem;
 
-    private UnitSlotCode[] validTargets = null;
+    private TargetingMode currentMode = TargetingMode.NONE;
+    private UnitTargetStatus targetStatus = UnitTargetStatus.NONE;
+    private UnitSlotCode[] possibleTargetCodes = null;
+    private BattleUnit[] validUnits = null;
 
     void Awake()
     {
@@ -22,16 +26,25 @@ public class TargetSystem : MonoBehaviour
     {
         if (IsTargetModeActive())
         {
-            // Take a look at BattleSystem's selected skill for its targeting mode, current phase (player or enemy), and current turn
+            // Take a look at BattleSystem's selected skill for its targeting mode, current phase (player or enemy), required unit status, and current turn
             // Interpret those factors into an array of selectable targets
-            if (validTargets == null)
+            if (validUnits == null && possibleTargetCodes == null && targetStatus == UnitTargetStatus.NONE && currentMode == TargetingMode.NONE)
             {
-                validTargets = GetValidTargets(GetTargetModeFromCurrentAction(), battleSystem.GetCurrentBattleState(), battleSystem.GetCurrentTurnIndex());
+                currentMode = GetTargetModeFromCurrentAction();
+                targetStatus = GetTargetStatusFromCurrentAction();
+                possibleTargetCodes = GetPossibleTargets(currentMode, battleSystem.GetCurrentBattleState(), battleSystem.GetCurrentTurnIndex());
+                validUnits = GetValidUnits(targetStatus, possibleTargetCodes);
             }
+
+            // If the player clicks on a valid unit, confirm the action with the battle system by sending the target(s).
+            CheckMouseTargetSelect();
         }
         else
         {
-            validTargets = null;
+            currentMode = TargetingMode.NONE;
+            targetStatus = UnitTargetStatus.NONE;
+            possibleTargetCodes = null;
+            validUnits = null;
         }
     }
 
@@ -45,26 +58,166 @@ public class TargetSystem : MonoBehaviour
         return battleSystem.GetCurrentAction().actionParameters.TargetMode;
     }
 
-    private UnitSlotCode[] GetValidTargets(TargetingMode mode, BattleState state, int index)
+    private UnitTargetStatus GetTargetStatusFromCurrentAction()
+    {
+        return battleSystem.GetCurrentAction().actionParameters.TargetStatus;
+    }
+
+    // Helper function for selecting a valid target with the mouse
+    private void CheckMouseTargetSelect()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 999f))
+            {
+                foreach (BattleUnit b in validUnits)
+                {
+                    if (GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject))
+                    {
+                        switch (currentMode)
+                        {
+                            case TargetingMode.ALL_TEAMMATE:
+                            case TargetingMode.ALL_ENEMY:
+                            case TargetingMode.ALL_UNITS:
+                                battleSystem.StartAction(validUnits);
+                                break;
+                            case TargetingMode.SELF:
+                            case TargetingMode.SINGLE_TEAMMATE:
+                            case TargetingMode.SINGLE_ENEMY:
+                                battleSystem.StartAction(new BattleUnit[] {b});
+                                break;
+                            case TargetingMode.NONE:
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private BattleUnit[] GetValidUnits(UnitTargetStatus status, UnitSlotCode[] codes)
+    {
+        List<BattleUnit> tempList = new List<BattleUnit>();
+        foreach (UnitSlotCode usc in codes)
+        {
+            BattleUnit toAdd = battleSystem.GetUnitFromSlotCode(usc);
+            if (toAdd != null)
+            {
+                switch (status)
+                {
+                    case UnitTargetStatus.ALIVE:
+                        if (!toAdd.IsDead()) { tempList.Add(toAdd); }
+                        break;
+                    case UnitTargetStatus.DEAD:
+                        if (toAdd.IsDead()) { tempList.Add(toAdd); }
+                        break;
+                    case UnitTargetStatus.EITHER:
+                    default:
+                        tempList.Add(toAdd);
+                        break;
+                }
+            }
+        }
+        return tempList.ToArray();
+    }
+
+    private UnitSlotCode[] GetPossibleTargets(TargetingMode mode, BattleState state, int index)
     {
         if (state != BattleState.PLAYER && state != BattleState.ENEMY) { return null; } // Narrow state down to two possible states
-
-        UnitSlotCode[] retArray;
 
         switch (mode)
         {
             case TargetingMode.SELF:
-                retArray = (state == BattleState.PLAYER ? new UnitSlotCode[] { GetSlotCode(false, index) } : new UnitSlotCode[] { GetSlotCode(true, index) });
-                return retArray;
+                return GetSelfCode(mode, state, index);
             case TargetingMode.ALL_UNITS:
-                List<UnitSlotCode> tempList = new List<UnitSlotCode>();
-                tempList.AddRange(UnitSlotCode.GetValues(typeof(UnitSlotCode))); /* TODO */
-                tempList.Remove(UnitSlotCode.NONE);
-                retArray = tempList.ToArray();
-                return retArray;
+                return GetAllSlotCodes(mode, state, index);
+            case TargetingMode.SINGLE_TEAMMATE:
+            case TargetingMode.ALL_TEAMMATE:
+                return GetAllTeammates(mode, state, index);
+            case TargetingMode.SINGLE_ENEMY:
+            case TargetingMode.ALL_ENEMY:
+                return GetAllEnemies(mode, state, index);
+            case TargetingMode.NONE:
             default:
                 return null;
         }
+    }
+
+    // Helper functions for each case in GetPossibleTargets() function
+    private UnitSlotCode[] GetSelfCode(TargetingMode mode, BattleState state, int index)
+    {
+        return (state == BattleState.PLAYER ? new UnitSlotCode[] { GetSlotCode(false, index) } : new UnitSlotCode[] { GetSlotCode(true, index) });
+    }
+
+    private UnitSlotCode[] GetAllSlotCodes(TargetingMode mode, BattleState state, int index)
+    {
+        List<UnitSlotCode> tempList = new List<UnitSlotCode>();
+        UnitSlotCode[] tempArray = (UnitSlotCode[])UnitSlotCode.GetValues(typeof(UnitSlotCode));
+        foreach (UnitSlotCode usc in tempArray)
+        {
+            if (usc != UnitSlotCode.NONE)
+            {
+                tempList.Add(usc);
+            }
+        }
+        return tempList.ToArray();
+    }
+
+    private UnitSlotCode[] GetAllTeammates(TargetingMode mode, BattleState state, int index)
+    {
+        List<UnitSlotCode> tempList = new List<UnitSlotCode>();
+        UnitSlotCode[] tempArray = (UnitSlotCode[])UnitSlotCode.GetValues(typeof(UnitSlotCode));
+        if (state == BattleState.PLAYER)
+        {
+            foreach (UnitSlotCode usc in tempArray)
+            {
+                if (usc.ToString()[0] == 'P')
+                {
+                    tempList.Add(usc);
+                }
+            }
+        }
+        else
+        {
+            foreach (UnitSlotCode usc in tempArray)
+            {
+                if (usc.ToString()[0] == 'E')
+                {
+                    tempList.Add(usc);
+                }
+            }
+        }
+        return tempList.ToArray();
+    }
+
+    private UnitSlotCode[] GetAllEnemies(TargetingMode mode, BattleState state, int index)
+    {
+        List<UnitSlotCode> tempList = new List<UnitSlotCode>();
+        UnitSlotCode[] tempArray = (UnitSlotCode[])UnitSlotCode.GetValues(typeof(UnitSlotCode));
+        if (state == BattleState.PLAYER)
+        {
+            foreach (UnitSlotCode usc in tempArray)
+            {
+                if (usc.ToString()[0] == 'E')
+                {
+                    tempList.Add(usc);
+                }
+            }
+        }
+        else
+        {
+            foreach (UnitSlotCode usc in tempArray)
+            {
+                if (usc.ToString()[0] == 'P')
+                {
+                    tempList.Add(usc);
+                }
+            }
+        }
+        return tempList.ToArray();
     }
 
     // Helper function for finding the slot code given if it's an enemy and its slot index

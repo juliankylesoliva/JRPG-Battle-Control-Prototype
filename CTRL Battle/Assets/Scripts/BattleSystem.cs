@@ -151,7 +151,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (unit != null)
             {
-                playerTeamSpeed += unit.GetAgility();
+                playerTeamSpeed += unit.Agility;
             }
         }
 
@@ -161,7 +161,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (unit != null)
             {
-                enemyTeamSpeed += unit.GetAgility();
+                enemyTeamSpeed += unit.Agility;
             }
         }
 
@@ -183,6 +183,7 @@ public class BattleSystem : MonoBehaviour
     // Public helper function to be called by action scripts to notify the system to end the current turn
     public void EndOfTurn()
     {
+        EnemyCleanup();
         if (!IsBattleOver()) // Check if either side won
         {
             switch (currentState)
@@ -209,7 +210,9 @@ public class BattleSystem : MonoBehaviour
         
         if (currentTurn < playerSlots.Length)
         {
-            Debug.Log($"It's Player {currentTurn + 1}'s turn...");
+            BattleUnit currentUnit = GetCurrentUnit();
+            currentUnit.IsGuarding = false;
+            Debug.Log($"It's {currentUnit.CharacterName}'s turn...");
             battleMenu.StandbyToHome();
         }
         else
@@ -227,7 +230,9 @@ public class BattleSystem : MonoBehaviour
 
         if (currentTurn < enemySlots.Length)
         {
-            Debug.Log($"It's Enemy {currentTurn + 1}'s turn...");
+            BattleUnit currentUnit = GetCurrentUnit();
+            currentUnit.IsGuarding = false;
+            Debug.Log($"It's {currentUnit.CharacterName}'s turn...");
         }
         else
         {
@@ -273,13 +278,32 @@ public class BattleSystem : MonoBehaviour
         return true;
     }
 
+    // Helper function for deleting defeated enemies
+    private void EnemyCleanup()
+    {
+        for (int i = 0; i < enemyUnits.Length; ++i)
+        {
+            BattleUnit unit = enemyUnits[i];
+            if (unit != null && unit.IsDead())
+            {
+                GameObject.Destroy(unit.gameObject);
+                enemyUnits[i] = null;
+            }
+        }
+    }
+
     // Public functions for selecting/deselecting/starting/getting the current action
-    public void SelectAction(ActionScript action)
+    public void SelectAction(ActionScript action, BattleUnit[] sources = null)
     {
         if (currentAction == null)
         {
             currentAction = action;
             currentAction.InitiateAction();
+
+            if (sources != null)
+            {
+                currentAction.SetSourceUnits(sources);
+            }
         }
     }
 
@@ -292,10 +316,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public void StartAction()
+    public void StartAction(BattleUnit[] targets = null)
     {
         if (currentAction != null)
         {
+            if (targets != null)
+            {
+                currentAction.SetTargetUnits(targets);
+            }
+
             currentAction.ConfirmAction();
             battleMenu.ClearStackStandby();
             currentAction = null;
@@ -317,5 +346,55 @@ public class BattleSystem : MonoBehaviour
     public int GetCurrentTurnIndex()
     {
         return currentTurn;
+    }
+
+    // Public function for getting unit data from slot codes
+    public BattleUnit GetUnitFromSlotCode(UnitSlotCode usc)
+    {
+        string code = usc.ToString();
+        int index = (int)char.GetNumericValue(code[1]);
+        if (code[0] == 'P')
+        {
+            if (index >= 1 && index <= 4)
+            {
+                return playerUnits[index - 1];
+            }
+            return null;
+        }
+        else if (code[0] == 'E')
+        {
+            if (index >= 1 && index <= 5)
+            {
+                return enemyUnits[index - 1];
+            }
+            return null;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    // Public helper function for getting the current unit's turn
+    public BattleUnit GetCurrentUnit()
+    {
+        if (currentState != BattleState.PLAYER && currentState != BattleState.ENEMY) { return null; }
+
+        if (currentState == BattleState.PLAYER)
+        {
+            if (currentTurn >= 0 && currentTurn < playerSlots.Length)
+            {
+                return playerUnits[currentTurn];
+            }
+            return null;
+        }
+        else // BattleState.ENEMY
+        {
+            if (currentTurn >= 0 && currentTurn < enemySlots.Length)
+            {
+                return enemyUnits[currentTurn];
+            }
+            return null;
+        }
     }
 }

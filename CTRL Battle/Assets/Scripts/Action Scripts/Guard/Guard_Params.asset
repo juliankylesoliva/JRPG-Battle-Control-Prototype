@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
   m_Name: Guard_Params
   m_EditorClassIdentifier: 
+  primaryType: 0
+  secondaryType: 0
   targetMode: 0
+  targetStatus: 0
   power: 0
   basePrecision: 0
   precisionDelta: 0

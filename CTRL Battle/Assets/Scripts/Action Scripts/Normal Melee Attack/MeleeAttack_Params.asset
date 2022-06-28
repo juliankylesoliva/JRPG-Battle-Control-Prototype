@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
   m_Name: MeleeAttack_Params
   m_EditorClassIdentifier: 
-  primaryType: 1
-  secondaryType: 0
+  damageType: 0
   targetMode: 3
+  targetStatus: 0
   power: 10
   basePrecision: 90
-  precisionDelta: 0.1
+  precisionDelta: 0.33333334
+  baseCritChance: 5
+  critChanceDelta: 0.2

@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 2278183606393407460}
   m_Layer: 0
   m_Name: TestEnemy
-  m_TagString: Untagged
+  m_TagString: UnitSelect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,8 +142,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a191e7963b7d604db8a06b838dfac3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHP: 3
-  MaxHP: 3
-  ATK: 1
-  DEF: 1
-  AGI: 2
+  Name: Enemy
+  CurrentHP: 18
+  MaxHP: 18
+  ATK: 3
+  DEF: 4
+  AGI: 8
+  CurrentMP: 6
+  MaxMP: 6
+  MAG: 4
+  RES: 2
+  ACC: 6
