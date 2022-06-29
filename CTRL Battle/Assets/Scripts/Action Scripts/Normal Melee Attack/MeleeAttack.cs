@@ -6,35 +6,48 @@ public class MeleeAttack : ActionScript
 {
     public override IEnumerator DoAction()
     {
-        yield return null;
+        // Attack announcement
+        yield return StartCoroutine(TimedAnnouncement($"{sourceUnits[0].CharacterName} attacks!"));
 
-        yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{sourceUnits[0].CharacterName} attacks!", 1f));
-
-        int hitRate = BattleCalculator.CalculateHitRate(sourceUnits[0], targetUnits[0], actionParameters);
-        if (!BattleCalculator.RollRNG(hitRate))
+        // Calculate hit rate and roll for hit. This action stops on a miss. Guarding targets cannot avoid attacks.
+        if (!targetUnits[0].IsGuarding && !BattleCalculator.RollRNG(BattleCalculator.CalculateHitRate(sourceUnits[0], targetUnits[0], actionParameters)))
         {
-            FloatingTextPopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), "MISS", Color.red, 8f, 1f);
-            yield return new WaitForSeconds(1f);
+            CreateMissText(targetUnits[0]);
+            yield return WaitASec;
             yield break;
         }
 
+        // Calculate initial damage
         int damage = BattleCalculator.CalculateDamage(sourceUnits[0], targetUnits[0], actionParameters);
 
-        int critRate = BattleCalculator.CalculateCritRate(sourceUnits[0], targetUnits[0], actionParameters);
-        bool crit = BattleCalculator.RollRNG(critRate);
-        if (crit)
+        // Check if the target is guarding. Cannot land crits or hit weaknesses while guarding.
+        bool crit = false;
+        if (!targetUnits[0].IsGuarding)
         {
-            damage *= 2;
-            FloatingTextPopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), "CRITICAL!", Color.blue, 12f, 1f);
+            // Calculate crit rate and roll for crit. Double the above damage variable if successful.
+            int critRate = BattleCalculator.CalculateCritRate(sourceUnits[0], targetUnits[0], actionParameters);
+            crit = BattleCalculator.RollRNG(critRate);
+            if (crit)
+            {
+                damage *= 2;
+                CreateCritText(targetUnits[0]);
+            }
+        }
+        else
+        {
+            damage /= 2;
+            CreateGuardText(targetUnits[0]);
         }
 
+        // Apply the calculated damage to the target unit
         targetUnits[0].DamageUnit(damage);
-        DamagePopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), damage, crit, 1f);
-        yield return new WaitForSeconds(1f);
+        CreateDamageText(targetUnits[0], damage, crit);
+        yield return WaitASec;
 
+        // Check if any of the targets are defeated. Announce them if they are.
         if (targetUnits[0].IsDead())
         {
-            yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnits[0].CharacterName} was defeated!", 1f));
+            yield return StartCoroutine(TimedAnnouncement($"{targetUnits[0].CharacterName} was defeated!"));
         }
     }
 }

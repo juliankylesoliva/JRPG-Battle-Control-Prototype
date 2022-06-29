@@ -80,6 +80,8 @@ public abstract class ActionScript : MonoBehaviour
 
     public abstract IEnumerator DoAction();
 
+    protected WaitForSeconds WaitASec = new WaitForSeconds(1f);
+
     protected bool AreAllTargetsDefeated()
     {
         foreach (BattleUnit unit in targetUnits)
@@ -92,5 +94,36 @@ public abstract class ActionScript : MonoBehaviour
     protected Vector3 GetPositionAboveUnit(BattleUnit unit)
     {
         return (unit.transform.position + (Vector3.up * 2f));
+    }
+
+    protected void CreateMissText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "MISS", Color.red, 8f, 1f);
+    }
+
+    protected void CreateGuardText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "GUARD", Color.gray, 8f, 1f);
+    }
+
+    protected void CreateCritText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "CRITICAL!", Color.blue, 12f, 1f);
+    }
+
+    protected void CreateTotalDamageText(BattleUnit target, int damage)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 12f, 1f);
+    }
+
+    protected void CreateDamageText(BattleUnit target, int damage, bool isCrit)
+    {
+        DamagePopup.Create(GetPositionAboveUnit(target), damage, isCrit, 1f);
+    }
+
+
+    protected IEnumerator TimedAnnouncement(string message)
+    {
+        yield return StartCoroutine(TextPopups.AnnounceForSeconds(message, 1f));
     }
 }

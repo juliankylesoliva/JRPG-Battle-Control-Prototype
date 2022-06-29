@@ -211,8 +211,6 @@ public class BattleSystem : MonoBehaviour
             BattleUnit currentUnit = GetCurrentUnit();
             currentUnit.IsGuarding = false;
             currentUnit.ReloadAmmo();
-            //TextPopups.Announce($"It's {currentUnit.CharacterName}'s turn...");
-
             battleMenu.StandbyToHome();
         }
         else
@@ -232,7 +230,7 @@ public class BattleSystem : MonoBehaviour
         {
             BattleUnit currentUnit = GetCurrentUnit();
             currentUnit.IsGuarding = false;
-            TextPopups.Announce($"It's {currentUnit.CharacterName}'s turn...");
+            ActivateEnemyAI(currentUnit.gameObject);
         }
         else
         {
@@ -334,6 +332,16 @@ public class BattleSystem : MonoBehaviour
     public ActionScript GetCurrentAction()
     {
         return currentAction;
+    }
+
+    // Helper function for activating the enemy's attached AI script.
+    private void ActivateEnemyAI(GameObject enemyObj)
+    {
+        EnemyScript enemyAI = enemyObj.GetComponent<EnemyScript>();
+        if (enemyAI != null)
+        {
+            enemyAI.ActivateEnemy();
+        }
     }
 
     // Public function for returning the current battle state

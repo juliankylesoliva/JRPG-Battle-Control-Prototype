@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6561898174806490907}
   - component: {fileID: 2278183606393407460}
+  - component: {fileID: -770318714958678039}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: UnitSelect
@@ -160,3 +161,15 @@ MonoBehaviour:
   ammoLoaded: 0
   maxAmmo: 0
   reloadRate: 0
+--- !u!114 &-770318714958678039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561898174806490906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6c4cee933fee4e9861c92dd28af9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
