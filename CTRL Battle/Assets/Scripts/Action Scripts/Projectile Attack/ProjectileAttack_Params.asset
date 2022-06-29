@@ -15,7 +15,7 @@ MonoBehaviour:
   damageType: 3
   targetMode: 3
   targetStatus: 0
-  power: 5
+  power: 3
   basePrecision: 80
   precisionDelta: 0.5
   baseCritChance: 1

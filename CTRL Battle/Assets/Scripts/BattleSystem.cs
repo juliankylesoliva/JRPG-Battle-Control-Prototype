@@ -54,23 +54,22 @@ public class BattleSystem : MonoBehaviour
         currentState = BattleState.START;
         SetupPlayers();
         SetupEnemies();
-        BattleStartMessage();
-        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(BattleStartMessage());
         StartCoroutine(ChangePhase());
     }
 
-    private void BattleStartMessage()
+    private IEnumerator BattleStartMessage()
     {
         switch (encounterType)
         {
             case EncounterType.NORMAL:
-                Debug.Log("You encountered the enemy!");
+                yield return StartCoroutine(TextPopups.AnnounceForSeconds("You encountered the enemy!", 2f));
                 break;
             case EncounterType.PLAYER_AMBUSH:
-                Debug.Log("You ambushed the enemy!!!");
+                yield return StartCoroutine(TextPopups.AnnounceForSeconds("You ambushed the enemy!!!", 2f));
                 break;
             case EncounterType.ENEMY_AMBUSH:
-                Debug.Log("You been ambushed!!!");
+                yield return StartCoroutine(TextPopups.AnnounceForSeconds("You have been ambushed!!!", 2f));
                 break;
         }
     }
@@ -131,10 +130,9 @@ public class BattleSystem : MonoBehaviour
         }
 
         // Announce phase change
-        if (currentState == BattleState.PLAYER) { Debug.Log("PLAYER PHASE"); }
-        else if (currentState == BattleState.ENEMY) { Debug.Log("ENEMY PHASE"); }
-        else { /* N/A */ }
-        yield return new WaitForSeconds(1f);
+        if (currentState == BattleState.PLAYER) { yield return StartCoroutine(TextPopups.AnnounceForSeconds("PLAYER PHASE", 1f)); }
+        else if (currentState == BattleState.ENEMY) { yield return StartCoroutine(TextPopups.AnnounceForSeconds("ENEMY PHASE", 1f)); }
+        else { yield return null; }
 
         // Start the first available team member's turn
         if (currentState == BattleState.PLAYER) { GoToNextPlayerPartyMember(); }
@@ -213,7 +211,8 @@ public class BattleSystem : MonoBehaviour
             BattleUnit currentUnit = GetCurrentUnit();
             currentUnit.IsGuarding = false;
             currentUnit.ReloadAmmo();
-            Debug.Log($"It's {currentUnit.CharacterName}'s turn...");
+            //TextPopups.Announce($"It's {currentUnit.CharacterName}'s turn...");
+
             battleMenu.StandbyToHome();
         }
         else
@@ -233,7 +232,7 @@ public class BattleSystem : MonoBehaviour
         {
             BattleUnit currentUnit = GetCurrentUnit();
             currentUnit.IsGuarding = false;
-            Debug.Log($"It's {currentUnit.CharacterName}'s turn...");
+            TextPopups.Announce($"It's {currentUnit.CharacterName}'s turn...");
         }
         else
         {
@@ -247,8 +246,8 @@ public class BattleSystem : MonoBehaviour
         if (!IsPlayerPartyDefeated() && !IsEnemyPartyDefeated()) { return false; }
         else
         {
-            if (IsPlayerPartyDefeated()) { Debug.Log("You lost the battle..."); }
-            else if (IsEnemyPartyDefeated()) { Debug.Log("YOU WON!"); }
+            if (IsPlayerPartyDefeated()) { TextPopups.Announce("You lost the battle..."); }
+            else if (IsEnemyPartyDefeated()) { TextPopups.Announce("YOU WON!"); }
             else { /* N/A */ }
 
             return true;

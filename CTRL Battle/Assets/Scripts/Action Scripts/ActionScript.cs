@@ -53,7 +53,6 @@ public abstract class ActionScript : MonoBehaviour
         targetUnits = null;
         isWaiting = true;
 
-        Debug.Log("Action Waiting...");
         while (!isActionConfirmed)
         {
             isWaiting = true;
@@ -63,7 +62,6 @@ public abstract class ActionScript : MonoBehaviour
                 isWaiting = false;
                 sourceUnits = null;
                 targetUnits = null;
-                Debug.Log("Action Cancelled!");
                 yield break;
             }
             else
@@ -71,7 +69,6 @@ public abstract class ActionScript : MonoBehaviour
                 yield return null;
             }
         }
-        Debug.Log("Action Confirmed!");
 
         isActionConfirmed = false;
         isWaiting = false;

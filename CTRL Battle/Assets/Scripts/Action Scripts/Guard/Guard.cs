@@ -7,7 +7,6 @@ public class Guard : ActionScript
     public override IEnumerator DoAction()
     {
         sourceUnits[0].IsGuarding = true;
-        Debug.Log($"{sourceUnits[0].CharacterName} is guarding.");
-        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{sourceUnits[0].CharacterName} is guarding.", 1f));
     }
 }

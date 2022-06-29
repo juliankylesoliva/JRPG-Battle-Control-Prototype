@@ -58,7 +58,7 @@ public class BattleMenu : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (currentMenuState == MenuState.HOME) // Activate projectile mode
+            if (currentMenuState == MenuState.HOME) // Activate projectile attack
             {
                 if (UnitHasAmmo())
                 {
@@ -70,9 +70,27 @@ public class BattleMenu : MonoBehaviour
                     Debug.Log("Out of ammo!");
                 }
             }
-            // NOTE: Add reload function if player presses Tab again?
         }
         else {/* Nothing */}
+    }
+
+    // Helper function for doing certain actions when switcing to a specific menu state.
+    private void CheckMenuState()
+    {
+        switch (currentMenuState)
+        {
+            case MenuState.HOME:
+                TextPopups.Announce($"It's {battleSystem.GetCurrentUnit().CharacterName}'s turn...");
+                break;
+            case MenuState.GUARD_CONFIRMATION:
+                TextPopups.Announce("[SPACE]: Guard | [LShift]: Cancel");
+                break;
+            case MenuState.TARGET_MODE:
+                break;
+            default:
+                TextPopups.Announce("");
+                break;
+        }
     }
 
     // Helper function for going to the next state in the battle menu
@@ -80,6 +98,7 @@ public class BattleMenu : MonoBehaviour
     {
         previousMenuStates.Add(currentMenuState);
         currentMenuState = nextState;
+        CheckMenuState();
         Debug.Log($"Went to {currentMenuState}");
     }
 
@@ -91,6 +110,7 @@ public class BattleMenu : MonoBehaviour
             int lastIndex = (previousMenuStates.Count - 1);
             currentMenuState = previousMenuStates[lastIndex];
             previousMenuStates.RemoveAt(lastIndex);
+            CheckMenuState();
             Debug.Log($"Went back to {currentMenuState}");
         }
     }
@@ -106,12 +126,17 @@ public class BattleMenu : MonoBehaviour
     {
         previousMenuStates.Clear();
         currentMenuState = MenuState.STANDBY;
+        CheckMenuState();
     }
 
     // Helper function for switching from standby state to home state
     public void StandbyToHome()
     {
-        if (currentMenuState == MenuState.STANDBY) { currentMenuState = MenuState.HOME; }
+        if (currentMenuState == MenuState.STANDBY)
+        {
+            currentMenuState = MenuState.HOME;
+            CheckMenuState();
+        }
     }
 
     public MenuState GetCurrentMenuState()

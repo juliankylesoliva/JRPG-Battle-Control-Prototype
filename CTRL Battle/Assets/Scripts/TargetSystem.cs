@@ -34,6 +34,7 @@ public class TargetSystem : MonoBehaviour
                 targetStatus = GetTargetStatusFromCurrentAction();
                 possibleTargetCodes = GetPossibleTargets(currentMode, battleSystem.GetCurrentBattleState(), battleSystem.GetCurrentTurnIndex());
                 validUnits = GetValidUnits(targetStatus, possibleTargetCodes);
+                AnnounceTarget();
             }
 
             // If the player clicks on a valid unit, confirm the action with the battle system by sending the target(s).
@@ -61,6 +62,35 @@ public class TargetSystem : MonoBehaviour
     private UnitTargetStatus GetTargetStatusFromCurrentAction()
     {
         return battleSystem.GetCurrentAction().actionParameters.TargetStatus;
+    }
+
+    // Helper function for announcing the targeting mode
+    private void AnnounceTarget()
+    {
+        switch (currentMode)
+        {
+            case TargetingMode.SELF:
+                TextPopups.Announce("Targeting yourself!");
+                break;
+            case TargetingMode.SINGLE_TEAMMATE:
+                TextPopups.Announce("Select a teammate!");
+                break;
+            case TargetingMode.ALL_TEAMMATE:
+                TextPopups.Announce("Targeting the whole party!");
+                break;
+            case TargetingMode.SINGLE_ENEMY:
+                TextPopups.Announce("Select an enemy!");
+                break;
+            case TargetingMode.ALL_ENEMY:
+                TextPopups.Announce("Targeting all enemies!");
+                break;
+            case TargetingMode.ALL_UNITS:
+                TextPopups.Announce("Targeting everyone!");
+                break;
+            default:
+                Debug.Log("No targets?");
+                break;
+        }
     }
 
     // Helper function for selecting a valid target with the mouse

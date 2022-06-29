@@ -18,7 +18,7 @@ public class ActionMasterList : MonoBehaviour
         actionsList = new Dictionary<string, ActionScript>();
         foreach (GameObject actionObj in normalActionPrefabs)
         {
-            ActionScript action = Instantiate(actionObj).GetComponent<ActionScript>();
+            ActionScript action = Instantiate(actionObj, this.transform).GetComponent<ActionScript>();
             actionsList.Add(action.GetType().Name, action);
         }
     }
