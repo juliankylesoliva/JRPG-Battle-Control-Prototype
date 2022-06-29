@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: FloatingTexts
+    uniqueID: 1590486663
+    locked: 0
   - name: DamageNumbers
     uniqueID: 1578252165
     locked: 0

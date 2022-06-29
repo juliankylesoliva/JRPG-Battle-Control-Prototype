@@ -16,7 +16,7 @@ public class ProjectileAttack : ActionScript
             int hitRate = BattleCalculator.CalculateHitRate(sourceUnits[0], targetUnits[0], actionParameters);
             if (!BattleCalculator.RollRNG(hitRate))
             {
-                TextPopups.Announce($"Missed! ({totalDamage} total damage)");
+                FloatingTextPopup.Create(GetPositionAboveUnit(targetUnits[0]), "MISS", Color.red, 8f, 1f);
             }
             else
             {
@@ -26,12 +26,12 @@ public class ProjectileAttack : ActionScript
                 if (crit)
                 {
                     damage *= 2;
+                    FloatingTextPopup.Create(GetPositionAboveUnit(targetUnits[0]), "CRITICAL!", Color.blue, 12f, 1f);
                 }
                 targetUnits[0].DamageUnit(damage);
                 totalDamage += damage;
 
-                DamagePopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), damage, crit, 1f);
-                TextPopups.Announce($"{(crit ? "CRIT!!!" : "Hit!")} ({totalDamage} total damage)");
+                DamagePopup.Create(GetPositionAboveUnit(targetUnits[0]), damage, crit, 1f);
             }
 
             sourceUnits[0].FireAmmo();
@@ -54,7 +54,10 @@ public class ProjectileAttack : ActionScript
 
         } while (!isPlayerFinished && sourceUnits[0].AmmoLoaded > 0 && !AreAllTargetsDefeated());
 
-        yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnits[0].CharacterName} took {totalDamage} total damage!", 1f));
+        yield return new WaitForSeconds(1f);
+        FloatingTextPopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), $"{totalDamage} TOTAL", Color.yellow, 12f, 1f);
+        yield return new WaitForSeconds(1f);
+
         if (targetUnits[0].IsDead())
         {
             yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnits[0].CharacterName} was defeated!", 1f));

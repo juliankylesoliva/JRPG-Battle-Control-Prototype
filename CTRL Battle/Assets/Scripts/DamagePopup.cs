@@ -32,6 +32,8 @@ public class DamagePopup : MonoBehaviour
     private float expireTimer;
     private Color textColor;
 
+    private static int sortOrder = 0;
+
     void Awake()
     {
         damageNumberText = this.gameObject.GetComponent<TextMeshPro>();
@@ -61,6 +63,9 @@ public class DamagePopup : MonoBehaviour
             textColor = critColor;
         }
         damageNumberText.color = textColor;
+
+        damageNumberText.sortingOrder = sortOrder;
+        sortOrder++;
     }
 
     private void ExpireTimerCountdown()

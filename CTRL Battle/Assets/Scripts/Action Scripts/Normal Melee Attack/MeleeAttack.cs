@@ -13,7 +13,8 @@ public class MeleeAttack : ActionScript
         int hitRate = BattleCalculator.CalculateHitRate(sourceUnits[0], targetUnits[0], actionParameters);
         if (!BattleCalculator.RollRNG(hitRate))
         {
-            yield return StartCoroutine(TextPopups.AnnounceForSeconds("The attack missed!", 1f));
+            FloatingTextPopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), "MISS", Color.red, 8f, 1f);
+            yield return new WaitForSeconds(1f);
             yield break;
         }
 
@@ -24,6 +25,7 @@ public class MeleeAttack : ActionScript
         if (crit)
         {
             damage *= 2;
+            FloatingTextPopup.Create(targetUnits[0].transform.position + (Vector3.up * 2f), "CRITICAL!", Color.blue, 12f, 1f);
         }
 
         targetUnits[0].DamageUnit(damage);

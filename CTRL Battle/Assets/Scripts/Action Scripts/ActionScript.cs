@@ -88,4 +88,9 @@ public abstract class ActionScript : MonoBehaviour
         }
         return true;
     }
+
+    protected Vector3 GetPositionAboveUnit(BattleUnit unit)
+    {
+        return (unit.transform.position + (Vector3.up * 2f));
+    }
 }

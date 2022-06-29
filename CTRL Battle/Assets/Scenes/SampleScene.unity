@@ -490,6 +490,7 @@ MonoBehaviour:
   textBox: {fileID: 1493367735}
   announceText: {fileID: 1504681641}
   damagePopupPrefab: {fileID: 7553675262299414873, guid: 102c504faa486094083924707b36fb81, type: 3}
+  floatingTextPopupPrefab: {fileID: 5618883944605219504, guid: 3632725d4e355c442a0219b4b41aa7ce, type: 3}
 --- !u!1 &367294505
 GameObject:
   m_ObjectHideFlags: 0

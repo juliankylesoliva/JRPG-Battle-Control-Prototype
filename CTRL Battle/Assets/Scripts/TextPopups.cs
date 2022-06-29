@@ -12,11 +12,15 @@ public class TextPopups : MonoBehaviour
     [SerializeField] GameObject damagePopupPrefab;
     private static GameObject _damagePopupPrefab;
 
+    [SerializeField] GameObject floatingTextPopupPrefab;
+    private static GameObject _floatingTextPopupPrefab;
+
     private static string popupText = "";
 
     void Awake()
     {
         _damagePopupPrefab = damagePopupPrefab;
+        _floatingTextPopupPrefab = floatingTextPopupPrefab;
     }
 
     void Update()
@@ -55,5 +59,10 @@ public class TextPopups : MonoBehaviour
     public static GameObject GetDamagePopupPrefab()
     {
         return _damagePopupPrefab;
+    }
+
+    public static GameObject GetFloatingTextPopupPrefab()
+    {
+        return _floatingTextPopupPrefab;
     }
 }
