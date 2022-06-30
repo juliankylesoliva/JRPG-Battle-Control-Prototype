@@ -157,3 +157,6 @@ MonoBehaviour:
   CHA: 3
   COM: 3
   SKL: 3
+  ammoLoaded: 6
+  maxAmmo: 6
+  reloadRate: 1

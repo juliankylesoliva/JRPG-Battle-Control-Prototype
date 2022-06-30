@@ -26,7 +26,7 @@ public class EnScr_AttackRandom : EnemyScript
         do
         {
             chosenTarget = battleSystem.GetUnitFromSlotCode(possibleTargets[Random.Range(0, possibleTargets.Length)]);
-        } while (chosenTarget == null);
+        } while (chosenTarget == null || chosenTarget.IsDead());
 
         battleSystem.StartAction(new BattleUnit[] {chosenTarget});
     }

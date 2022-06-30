@@ -7,7 +7,9 @@ public class MeleeAttack : ActionScript
     public override IEnumerator DoAction()
     {
         // Attack announcement
+        yield return StartCoroutine(AttackCamera(sourceUnits[0], 0.5f));
         yield return StartCoroutine(TimedAnnouncement($"{sourceUnits[0].CharacterName} attacks!"));
+        yield return StartCoroutine(AttackCamera(targetUnits[0], 0.5f));
 
         // Calculate hit rate and roll for hit. This action stops on a miss. Guarding targets cannot avoid attacks.
         if (!targetUnits[0].IsGuarding && !BattleCalculator.RollRNG(BattleCalculator.CalculateHitRate(sourceUnits[0], targetUnits[0], actionParameters)))
@@ -42,12 +44,10 @@ public class MeleeAttack : ActionScript
         // Apply the calculated damage to the target unit
         targetUnits[0].DamageUnit(damage);
         CreateDamageText(targetUnits[0], damage, crit);
-        yield return WaitASec;
-
-        // Check if any of the targets are defeated. Announce them if they are.
         if (targetUnits[0].IsDead())
         {
-            yield return StartCoroutine(TimedAnnouncement($"{targetUnits[0].CharacterName} was defeated!"));
+            CreateKOdText(targetUnits[0]);
         }
+        yield return WaitASec;
     }
 }

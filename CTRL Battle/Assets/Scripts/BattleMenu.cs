@@ -81,6 +81,7 @@ public class BattleMenu : MonoBehaviour
         {
             case MenuState.HOME:
                 TextPopups.Announce($"It's {battleSystem.GetCurrentUnit().CharacterName}'s turn...");
+                CameraSwitcher.ChangeToCamera($"{battleSystem.GetCurrentUnitSlotCode()}Cam");
                 break;
             case MenuState.GUARD_CONFIRMATION:
                 TextPopups.Announce("[SPACE]: Guard | [LShift]: Cancel");

@@ -50,7 +50,7 @@ public class DamagePopup : MonoBehaviour
     {
         damageNumberText.SetText(damageNumber.ToString());
         expireTimer = time;
-        rigidbody.velocity = new Vector3(HorizontalVelocityRandomizer(maxHorizontalVelocity * (isCrit ? critVelocityMultiplier : 1f)), initialVerticalVelocity * (isCrit ? critVelocityMultiplier : 1f), 0f);
+        rigidbody.velocity = ((Vector3.up * initialVerticalVelocity * (isCrit ? critVelocityMultiplier : 1f)) + HorizontalVelocityRandomizer(maxHorizontalVelocity) + GetBackVelocity(maxHorizontalVelocity));
 
         if (!isCrit)
         {
@@ -90,8 +90,13 @@ public class DamagePopup : MonoBehaviour
         }
     }
 
-    private float HorizontalVelocityRandomizer(float magnitude)
+    private Vector3 HorizontalVelocityRandomizer(float magnitude)
     {
-        return (Random.Range(0f, 1f) < 0.5f ? -magnitude : magnitude);
+        return (Random.Range(0f, 1f) < 0.5f ? magnitude * Camera.main.transform.right : -magnitude * Camera.main.transform.right);
+    }
+
+    private Vector3 GetBackVelocity(float magnitude)
+    {
+        return -Camera.main.transform.forward * magnitude;
     }
 }

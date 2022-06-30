@@ -34,6 +34,7 @@ public class TargetSystem : MonoBehaviour
                 targetStatus = GetTargetStatusFromCurrentAction();
                 possibleTargetCodes = GetPossibleTargets(currentMode, battleSystem.GetCurrentBattleState(), battleSystem.GetCurrentTurnIndex());
                 validUnits = GetValidUnits(targetStatus, possibleTargetCodes);
+                FocusCameraOnTargets();
                 AnnounceTarget();
             }
 
@@ -62,6 +63,30 @@ public class TargetSystem : MonoBehaviour
     private UnitTargetStatus GetTargetStatusFromCurrentAction()
     {
         return battleSystem.GetCurrentAction().actionParameters.TargetStatus;
+    }
+
+    // Helper function for switching the camera to the targets
+    private void FocusCameraOnTargets()
+    {
+        switch (currentMode)
+        {
+            case TargetingMode.SELF:
+                break;
+            case TargetingMode.SINGLE_TEAMMATE:
+            case TargetingMode.ALL_TEAMMATE:
+                CameraSwitcher.ChangeToCamera("PlayerTargetCam");
+                break;
+            case TargetingMode.SINGLE_ENEMY:
+            case TargetingMode.ALL_ENEMY:
+                CameraSwitcher.ChangeToCamera("EnemyTargetCam");
+                break;
+            case TargetingMode.ALL_UNITS:
+                CameraSwitcher.ChangeToCamera("AllTargetCam");
+                break;
+            default:
+                CameraSwitcher.ChangeToCamera("OverviewCam");
+                break;
+        }
     }
 
     // Helper function for announcing the targeting mode
@@ -104,7 +129,7 @@ public class TargetSystem : MonoBehaviour
             {
                 foreach (BattleUnit b in validUnits)
                 {
-                    if (GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject))
+                    if (GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject)) // The hit was on the model, not the actual gameobject
                     {
                         switch (currentMode)
                         {

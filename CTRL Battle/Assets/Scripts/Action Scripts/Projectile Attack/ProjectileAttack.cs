@@ -6,8 +6,11 @@ public class ProjectileAttack : ActionScript
 {
     public override IEnumerator DoAction()
     {
+        StartCoroutine(AttackCamera(targetUnits[0]));
+
         // Prompt controls via announcement
         TextPopups.Announce("[LClk]: Fire! | [LShft]: Cease!");
+
 
         // Keep track of player input and total amount of damage.
         bool isPlayerFinished = false;
@@ -50,6 +53,11 @@ public class ProjectileAttack : ActionScript
                 CreateDamageText(targetUnits[0], damage, crit);
             }
 
+            if (targetUnits[0].IsDead())
+            {
+                CreateKOdText(targetUnits[0]);
+            }
+
             // Deplete the user's ammo
             sourceUnits[0].FireAmmo();
 
@@ -86,10 +94,5 @@ public class ProjectileAttack : ActionScript
         yield return WaitASec;
         CreateTotalDamageText(targetUnits[0], totalDamage);
         yield return WaitASec;
-
-        if (targetUnits[0].IsDead())
-        {
-            yield return StartCoroutine(TimedAnnouncement($"{targetUnits[0].CharacterName} was defeated!"));
-        }
     }
 }

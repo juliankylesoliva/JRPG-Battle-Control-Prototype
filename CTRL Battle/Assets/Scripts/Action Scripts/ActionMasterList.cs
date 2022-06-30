@@ -15,6 +15,8 @@ public class ActionMasterList : MonoBehaviour
 
     private void InitializeActionsList()
     {
+        if (actionsList != null) { return; }
+
         actionsList = new Dictionary<string, ActionScript>();
         foreach (GameObject actionObj in normalActionPrefabs)
         {

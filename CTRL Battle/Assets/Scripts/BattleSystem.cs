@@ -130,8 +130,16 @@ public class BattleSystem : MonoBehaviour
         }
 
         // Announce phase change
-        if (currentState == BattleState.PLAYER) { yield return StartCoroutine(TextPopups.AnnounceForSeconds("PLAYER PHASE", 1f)); }
-        else if (currentState == BattleState.ENEMY) { yield return StartCoroutine(TextPopups.AnnounceForSeconds("ENEMY PHASE", 1f)); }
+        if (currentState == BattleState.PLAYER)
+        {
+            CameraSwitcher.ChangeToCamera("PlayerPhaseCam");
+            yield return StartCoroutine(TextPopups.AnnounceForSeconds("PLAYER PHASE", 1f));
+        }
+        else if (currentState == BattleState.ENEMY)
+        {
+            CameraSwitcher.ChangeToCamera("EnemyPhaseCam");
+            yield return StartCoroutine(TextPopups.AnnounceForSeconds("ENEMY PHASE", 1f));
+        }
         else { yield return null; }
 
         // Start the first available team member's turn
@@ -230,6 +238,7 @@ public class BattleSystem : MonoBehaviour
         {
             BattleUnit currentUnit = GetCurrentUnit();
             currentUnit.IsGuarding = false;
+            CameraSwitcher.ChangeToCamera($"{GetCurrentUnitSlotCode()}Cam");
             ActivateEnemyAI(currentUnit.gameObject);
         }
         else
@@ -244,6 +253,7 @@ public class BattleSystem : MonoBehaviour
         if (!IsPlayerPartyDefeated() && !IsEnemyPartyDefeated()) { return false; }
         else
         {
+            CameraSwitcher.ChangeToCamera("OverviewCamera");
             if (IsPlayerPartyDefeated()) { TextPopups.Announce("You lost the battle..."); }
             else if (IsEnemyPartyDefeated()) { TextPopups.Announce("YOU WON!"); }
             else { /* N/A */ }
@@ -383,6 +393,32 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    // Public function for getting slot codes from unit data
+    public UnitSlotCode GetSlotCodeFromUnit(BattleUnit unit)
+    {
+        UnitSlotCode retVal;
+
+        for (int i = 0; i < playerUnits.Length; ++i)
+        {
+            BattleUnit bu = playerUnits[i];
+            if (GameObject.ReferenceEquals(bu, unit))
+            {
+                return (UnitSlotCode.TryParse<UnitSlotCode>($"P{i + 1}", out retVal) ? retVal : UnitSlotCode.NONE);
+            }
+        }
+
+        for (int i = 0; i < enemyUnits.Length; ++i)
+        {
+            BattleUnit bu = enemyUnits[i];
+            if (GameObject.ReferenceEquals(bu, unit))
+            {
+                return (UnitSlotCode.TryParse<UnitSlotCode>($"E{i + 1}", out retVal) ? retVal : UnitSlotCode.NONE);
+            }
+        }
+
+        return UnitSlotCode.NONE;
+    }
+
     // Public helper function for getting the current unit's turn
     public BattleUnit GetCurrentUnit()
     {
@@ -403,6 +439,31 @@ public class BattleSystem : MonoBehaviour
                 return enemyUnits[currentTurn];
             }
             return null;
+        }
+    }
+
+    // Public helper function for getting the unit slot code of the current unit's turn
+    public UnitSlotCode GetCurrentUnitSlotCode()
+    {
+        if (currentState != BattleState.PLAYER && currentState != BattleState.ENEMY) { return UnitSlotCode.NONE; }
+
+        UnitSlotCode retVal;
+
+        if (currentState == BattleState.PLAYER)
+        {
+            if (currentTurn >= 0 && currentTurn < playerSlots.Length)
+            {
+                return (UnitSlotCode.TryParse<UnitSlotCode>($"P{currentTurn + 1}", out retVal) ? retVal : UnitSlotCode.NONE);
+            }
+            return UnitSlotCode.NONE;
+        }
+        else // BattleState.ENEMY
+        {
+            if (currentTurn >= 0 && currentTurn < enemySlots.Length)
+            {
+                return (UnitSlotCode.TryParse<UnitSlotCode>($"E{currentTurn + 1}", out retVal) ? retVal : UnitSlotCode.NONE);
+            }
+            return UnitSlotCode.NONE;
         }
     }
 }

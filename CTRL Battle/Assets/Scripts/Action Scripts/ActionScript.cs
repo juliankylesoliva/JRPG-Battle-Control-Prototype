@@ -6,7 +6,7 @@ public abstract class ActionScript : MonoBehaviour
 {
     public ActionParams actionParameters;
 
-    private BattleSystem battleSystem;
+    protected BattleSystem battleSystem;
 
     private bool isWaiting = false;
     private bool isActionCancelled = false;
@@ -78,7 +78,7 @@ public abstract class ActionScript : MonoBehaviour
         battleSystem.EndOfTurn();
     }
 
-    public abstract IEnumerator DoAction();
+    public abstract IEnumerator DoAction(); // Create a new script that inherits this class and override this function.
 
     protected WaitForSeconds WaitASec = new WaitForSeconds(1f);
 
@@ -93,27 +93,32 @@ public abstract class ActionScript : MonoBehaviour
 
     protected Vector3 GetPositionAboveUnit(BattleUnit unit)
     {
-        return (unit.transform.position + (Vector3.up * 2f));
+        return (unit.transform.position + (Vector3.up * 1.5f));
     }
 
     protected void CreateMissText(BattleUnit target)
     {
-        FloatingTextPopup.Create(GetPositionAboveUnit(target), "MISS", Color.red, 8f, 1f);
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "MISS", Color.red, 6f, 1f);
     }
 
     protected void CreateGuardText(BattleUnit target)
     {
-        FloatingTextPopup.Create(GetPositionAboveUnit(target), "GUARD", Color.gray, 8f, 1f);
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "GUARD", Color.gray, 6f, 1f);
     }
 
     protected void CreateCritText(BattleUnit target)
     {
-        FloatingTextPopup.Create(GetPositionAboveUnit(target), "CRITICAL!", Color.blue, 12f, 1f);
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "CRITICAL!", Color.blue, 9f, 1f);
+    }
+
+    protected void CreateKOdText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "KO'd!", Color.red, 9f, 1f);
     }
 
     protected void CreateTotalDamageText(BattleUnit target, int damage)
     {
-        FloatingTextPopup.Create(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 12f, 1f);
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 9f, 1f);
     }
 
     protected void CreateDamageText(BattleUnit target, int damage, bool isCrit)
@@ -121,9 +126,14 @@ public abstract class ActionScript : MonoBehaviour
         DamagePopup.Create(GetPositionAboveUnit(target), damage, isCrit, 1f);
     }
 
-
     protected IEnumerator TimedAnnouncement(string message)
     {
         yield return StartCoroutine(TextPopups.AnnounceForSeconds(message, 1f));
+    }
+
+    protected IEnumerator AttackCamera(BattleUnit unit, float time = 0f)
+    {
+        CameraSwitcher.ActionCamera(battleSystem.GetSlotCodeFromUnit(unit));
+        yield return new WaitForSeconds(time);
     }
 }
