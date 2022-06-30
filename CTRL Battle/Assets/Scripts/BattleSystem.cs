@@ -133,12 +133,12 @@ public class BattleSystem : MonoBehaviour
         if (currentState == BattleState.PLAYER)
         {
             CameraSwitcher.ChangeToCamera("PlayerPhaseCam");
-            yield return StartCoroutine(TextPopups.AnnounceForSeconds("PLAYER PHASE", 1f));
+            yield return StartCoroutine(TextPopups.AnnounceForSeconds("PLAYER PHASE", 1.5f));
         }
         else if (currentState == BattleState.ENEMY)
         {
             CameraSwitcher.ChangeToCamera("EnemyPhaseCam");
-            yield return StartCoroutine(TextPopups.AnnounceForSeconds("ENEMY PHASE", 1f));
+            yield return StartCoroutine(TextPopups.AnnounceForSeconds("ENEMY PHASE", 1.5f));
         }
         else { yield return null; }
 

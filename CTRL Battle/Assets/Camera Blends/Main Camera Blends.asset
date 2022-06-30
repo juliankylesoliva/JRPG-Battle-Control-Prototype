@@ -160,7 +160,7 @@ MonoBehaviour:
     m_To: P1Cam
     m_Blend:
       m_Style: 0
-      m_Time: 2
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -171,7 +171,7 @@ MonoBehaviour:
     m_To: P2Cam
     m_Blend:
       m_Style: 0
-      m_Time: 2
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -182,7 +182,7 @@ MonoBehaviour:
     m_To: P3Cam
     m_Blend:
       m_Style: 0
-      m_Time: 2
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_To: P4Cam
     m_Blend:
       m_Style: 0
-      m_Time: 2
+      m_Time: 0.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

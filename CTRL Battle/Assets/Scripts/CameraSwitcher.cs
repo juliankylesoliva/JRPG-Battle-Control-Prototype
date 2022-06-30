@@ -23,6 +23,7 @@ public class CameraSwitcher : MonoBehaviour
         cameraDictionary = new Dictionary<string, CinemachineVirtualCamera>();
         foreach (CinemachineVirtualCamera cam in cameraList)
         {
+            cam.Priority = 10;
             cameraDictionary.Add(cam.gameObject.name, cam);
         }
     }

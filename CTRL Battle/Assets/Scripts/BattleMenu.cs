@@ -100,7 +100,6 @@ public class BattleMenu : MonoBehaviour
         previousMenuStates.Add(currentMenuState);
         currentMenuState = nextState;
         CheckMenuState();
-        Debug.Log($"Went to {currentMenuState}");
     }
 
     // Helper function for going back in the battle menu
@@ -112,7 +111,6 @@ public class BattleMenu : MonoBehaviour
             currentMenuState = previousMenuStates[lastIndex];
             previousMenuStates.RemoveAt(lastIndex);
             CheckMenuState();
-            Debug.Log($"Went back to {currentMenuState}");
         }
     }
 
