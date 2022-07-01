@@ -82,7 +82,7 @@ MonoBehaviour:
   - m_From: EnemyTargetCam
     m_To: E1Cam
     m_Blend:
-      m_Style: 1
+      m_Style: 6
       m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
@@ -93,7 +93,7 @@ MonoBehaviour:
   - m_From: EnemyTargetCam
     m_To: E2Cam
     m_Blend:
-      m_Style: 1
+      m_Style: 6
       m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
@@ -104,7 +104,7 @@ MonoBehaviour:
   - m_From: EnemyTargetCam
     m_To: E3Cam
     m_Blend:
-      m_Style: 1
+      m_Style: 6
       m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
@@ -115,7 +115,7 @@ MonoBehaviour:
   - m_From: EnemyTargetCam
     m_To: E4Cam
     m_Blend:
-      m_Style: 1
+      m_Style: 6
       m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
@@ -126,7 +126,7 @@ MonoBehaviour:
   - m_From: EnemyTargetCam
     m_To: E5Cam
     m_Blend:
-      m_Style: 1
+      m_Style: 6
       m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
@@ -159,8 +159,8 @@ MonoBehaviour:
   - m_From: '**ANY CAMERA**'
     m_To: P1Cam
     m_Blend:
-      m_Style: 0
-      m_Time: 0.5
+      m_Style: 6
+      m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -170,8 +170,8 @@ MonoBehaviour:
   - m_From: '**ANY CAMERA**'
     m_To: P2Cam
     m_Blend:
-      m_Style: 0
-      m_Time: 0.5
+      m_Style: 6
+      m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -181,8 +181,8 @@ MonoBehaviour:
   - m_From: '**ANY CAMERA**'
     m_To: P3Cam
     m_Blend:
-      m_Style: 0
-      m_Time: 0.5
+      m_Style: 6
+      m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -192,8 +192,8 @@ MonoBehaviour:
   - m_From: '**ANY CAMERA**'
     m_To: P4Cam
     m_Blend:
-      m_Style: 0
-      m_Time: 0.5
+      m_Style: 6
+      m_Time: 0.1
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

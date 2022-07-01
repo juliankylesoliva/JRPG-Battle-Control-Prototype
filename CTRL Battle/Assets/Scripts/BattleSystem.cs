@@ -10,6 +10,10 @@ public class BattleSystem : MonoBehaviour
     // The battle menu component
     private BattleMenu battleMenu;
 
+    // Prefab and transform for the character status panels
+    [SerializeField] GameObject statusPanelPrefab;
+    [SerializeField] Transform statusPanelTranform;
+
     // Encounter type determines how the first team is chosen
     [SerializeField] EncounterType encounterType = EncounterType.NORMAL;
 
@@ -81,6 +85,17 @@ public class BattleSystem : MonoBehaviour
             int chosenIndex = playerIndices[i]; // Get index from player indices array
             GameObject tempObj = Instantiate(playerPrefabs[chosenIndex], playerSlots[i]); // Spawn the chosen player prefab to the correct player slot
             playerUnits[i] = tempObj.GetComponent<BattleUnit>(); // Save the BattleUnit component from the spawned-in prefab
+        }
+
+        for (int i = playerUnits.Length - 1; i >= 0; --i)
+        {
+            BattleUnit unit = playerUnits[i];
+            if (unit != null)
+            {
+                GameObject tempObj = Instantiate(statusPanelPrefab, statusPanelTranform);
+                StatusPanel tempPanel = tempObj.GetComponent<StatusPanel>();
+                tempPanel.SetBattleUnit(unit);
+            }
         }
     }
 
