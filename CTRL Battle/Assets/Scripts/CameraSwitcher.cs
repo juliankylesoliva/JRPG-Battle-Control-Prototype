@@ -9,6 +9,7 @@ public class CameraSwitcher : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera[] cameraList;
 
     private static Dictionary<string, CinemachineVirtualCamera> cameraDictionary = null;
+    private static int currentPriority = 0;
 
     void Awake()
     {
@@ -23,7 +24,7 @@ public class CameraSwitcher : MonoBehaviour
         cameraDictionary = new Dictionary<string, CinemachineVirtualCamera>();
         foreach (CinemachineVirtualCamera cam in cameraList)
         {
-            cam.Priority = 10;
+            cam.Priority = currentPriority;
             cameraDictionary.Add(cam.gameObject.name, cam);
         }
     }
@@ -32,7 +33,8 @@ public class CameraSwitcher : MonoBehaviour
     {
         if (cameraDictionary.ContainsKey(cameraName))
         {
-            cameraDictionary[cameraName].MoveToTopOfPrioritySubqueue();
+            currentPriority++;
+            cameraDictionary[cameraName].Priority = currentPriority;
         }
     }
 

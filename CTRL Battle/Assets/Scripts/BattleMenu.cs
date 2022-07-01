@@ -84,7 +84,7 @@ public class BattleMenu : MonoBehaviour
                 CameraSwitcher.ChangeToCamera($"{battleSystem.GetCurrentUnitSlotCode()}Cam");
                 break;
             case MenuState.GUARD_CONFIRMATION:
-                TextPopups.Announce("[SPACE]: Guard | [LShift]: Cancel");
+                TextPopups.Announce("Guard until your next turn?");
                 break;
             case MenuState.TARGET_MODE:
                 break;

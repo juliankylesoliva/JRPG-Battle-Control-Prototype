@@ -9,12 +9,13 @@ public class ProjectileAttack : ActionScript
         StartCoroutine(AttackCamera(targetUnits[0]));
 
         // Prompt controls via announcement
-        TextPopups.Announce("[LClk]: Fire! | [LShft]: Cease!");
+        TextPopups.Announce("Fire at will!");
 
 
         // Keep track of player input and total amount of damage.
         bool isPlayerFinished = false;
         int totalDamage = 0;
+        float beforeHPRatio = GetCurrentHPRatio(targetUnits[0]);
 
         do
         {
@@ -93,6 +94,8 @@ public class ProjectileAttack : ActionScript
         // Display total damage
         yield return WaitASec;
         CreateTotalDamageText(targetUnits[0], totalDamage);
+        float afterHPRatio = GetCurrentHPRatio(targetUnits[0]);
+        CreateMeter(targetUnits[0], beforeHPRatio, afterHPRatio, false);
         yield return WaitASec;
     }
 }

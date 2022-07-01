@@ -16,7 +16,7 @@ public class DamagePopup : MonoBehaviour
     [SerializeField, Range(0f, 10f)] float initialVerticalVelocity = 5f;
     [SerializeField, Range(0f, 1f)] float verticalVelocityDrop = 0.075f;
     [SerializeField, Range(0f, 10f)] float maxHorizontalVelocity = 4f;
-
+    
     [SerializeField, Range(1f, 3f)] float critVelocityMultiplier = 1.5f;
 
     [SerializeField] float normalFontSize = 8;

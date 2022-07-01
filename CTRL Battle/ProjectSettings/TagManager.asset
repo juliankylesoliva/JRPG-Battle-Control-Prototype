@@ -42,14 +42,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: HealthbarPopups
+    uniqueID: 866474453
+    locked: 0
   - name: FloatingTexts
     uniqueID: 1590486663
     locked: 0
   - name: DamageNumbers
     uniqueID: 1578252165
-    locked: 0
-  - name: HealthbarPopups
-    uniqueID: 866474453
     locked: 0
   - name: UI_Elements
     uniqueID: 2507993433

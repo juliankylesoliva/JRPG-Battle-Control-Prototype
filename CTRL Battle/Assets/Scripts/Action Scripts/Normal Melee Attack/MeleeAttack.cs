@@ -42,7 +42,10 @@ public class MeleeAttack : ActionScript
         }
 
         // Apply the calculated damage to the target unit
+        float beforeHPRatio = GetCurrentHPRatio(targetUnits[0]);
         targetUnits[0].DamageUnit(damage);
+        float afterHPRatio = GetCurrentHPRatio(targetUnits[0]);
+        CreateMeter(targetUnits[0], beforeHPRatio, afterHPRatio, false);
         CreateDamageText(targetUnits[0], damage, crit);
         if (targetUnits[0].IsDead())
         {

@@ -91,6 +91,16 @@ public abstract class ActionScript : MonoBehaviour
         return true;
     }
 
+    protected float GetCurrentHPRatio(BattleUnit unit)
+    {
+        return (((float)unit.Health) / ((float)unit.MaxHealth));
+    }
+
+    protected float GetCurrentMPRation(BattleUnit unit)
+    {
+        return (((float)unit.Magic) / ((float)unit.MaxMagic));
+    }
+
     protected Vector3 GetPositionAboveUnit(BattleUnit unit)
     {
         return (unit.transform.position + (Vector3.up * 1.5f));
@@ -124,6 +134,11 @@ public abstract class ActionScript : MonoBehaviour
     protected void CreateDamageText(BattleUnit target, int damage, bool isCrit)
     {
         DamagePopup.Create(GetPositionAboveUnit(target), damage, isCrit, 1f);
+    }
+
+    protected void CreateMeter(BattleUnit target, float startRatio, float endRatio, bool isMP)
+    {
+        MeterPopup.Create(GetPositionAboveUnit(target), startRatio, endRatio, isMP, 0.25f);
     }
 
     protected IEnumerator TimedAnnouncement(string message)

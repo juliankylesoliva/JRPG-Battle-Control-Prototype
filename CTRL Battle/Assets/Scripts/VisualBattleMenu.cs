@@ -86,6 +86,7 @@ public class VisualBattleMenu : MonoBehaviour
         TabKey.SetActive(true);
         TabText.gameObject.SetActive(true);
         TabText.text = "SHOOT";
+        ammoText.gameObject.SetActive(true);
 
         LShiftKey.SetActive(true);
         LShiftText.gameObject.SetActive(true);
@@ -114,6 +115,7 @@ public class VisualBattleMenu : MonoBehaviour
 
         TabKey.SetActive(false);
         TabText.gameObject.SetActive(false);
+        ammoText.gameObject.SetActive(false);
 
         LShiftKey.SetActive(true);
         LShiftText.gameObject.SetActive(true);

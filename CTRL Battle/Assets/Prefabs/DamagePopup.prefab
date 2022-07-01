@@ -81,7 +81,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1578252165
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7553675262299414879
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialVerticalVelocity: 5
-  verticalVelocityDrop: 0.075
+  verticalVelocityDrop: 0.8
   maxHorizontalVelocity: 4
   critVelocityMultiplier: 1.5
   normalFontSize: 8
