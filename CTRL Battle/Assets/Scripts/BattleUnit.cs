@@ -116,6 +116,16 @@ public class BattleUnit : MonoBehaviour
         set { SKL = StatValueRangeHelper(value, 1); }
     }
 
+    [Header("SKILL INFO")]
+
+    [SerializeField] string meleeAction = "MeleeAttack";
+    public string Melee { get { return meleeAction; } }
+
+    [SerializeField] string projectileAction = "ProjectileAttack";
+    public string Projectile { get { return projectileAction; } }
+
+    // [SerializeField] string[] equippedSkillActions;
+
     [Header("PROJECTILE STATS")]
     [SerializeField] int ammoLoaded = 6;
     public int AmmoLoaded

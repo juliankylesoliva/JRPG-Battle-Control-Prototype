@@ -32,17 +32,22 @@ public class BattleCalculator : MonoBehaviour
         return 0;
     }
 
-    public static float CalculateAttackDefenseRatio(int atkAttacker, int defDefender)
+    private static float CalculateAttackDefenseRatio(int atkAttacker, int defDefender)
     {
         return ((float)atkAttacker) / ((float)defDefender);
     }
 
-    public static float CalculateDeviation()
+    private static float CalculateDeviation()
     {
         return Random.Range(0.85f, 1f);
     }
 
-    public static int CalculateHitRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
+    public static bool IsHit(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
+    {
+        return attacker.IsGuarding || RollRNG(CalculateHitRate(attacker, defender, parameters));
+    }
+
+    private static int CalculateHitRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
     {
         int retHitRate = parameters.BasePrecision;
         int accAgiDiff = (attacker.Accuracy - defender.Agility);
@@ -63,10 +68,15 @@ public class BattleCalculator : MonoBehaviour
         }
     }
 
-    public static int CalculateCritRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
+    public static bool IsCrit(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
+    {
+        return !attacker.IsGuarding && RollRNG(CalculateCritRate(attacker, defender, parameters));
+    }
+
+    private static int CalculateCritRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
     {
         int retCritRate = parameters.BaseCritChance;
-        int accAgiDiff = (attacker.Accuracy - defender.Agility);
+        int accAgiDiff = (attacker.Skill - defender.Agility);
         int totalDelta = (int)(parameters.CritChanceDelta * (float)accAgiDiff);
         retCritRate += totalDelta;
 
@@ -84,7 +94,7 @@ public class BattleCalculator : MonoBehaviour
         }
     }
 
-    public static bool RollRNG(int percent)
+    private static bool RollRNG(int percent)
     {
         return Random.Range(0, 100) < percent;
     }

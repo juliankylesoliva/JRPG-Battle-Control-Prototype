@@ -156,4 +156,45 @@ public abstract class ActionScript : MonoBehaviour
         CameraSwitcher.ActionCamera(battleSystem.GetSlotCodeFromUnit(unit));
         yield return new WaitForSeconds(time);
     }
+
+    protected void ApplyDamageMods(ref int damage, bool isCrit, BattleUnit source, BattleUnit target)
+    {
+        if (isCrit)
+        {
+            damage *= 2;
+            CreateCritText(target);
+        }
+
+        if (target.IsGuarding)
+        {
+            damage /= 2;
+            CreateGuardText(target);
+        }
+    }
+
+    protected void DoSingleHitDamage(int damage, bool crit, BattleUnit target)
+    {
+        float beforeHPRatio = GetCurrentHPRatio(target);
+        target.DamageUnit(damage);
+        float afterHPRatio = GetCurrentHPRatio(target);
+        CreateMeter(target, beforeHPRatio, afterHPRatio, false);
+        CreateHitParticle(target);
+        CreateDamageText(target, damage, crit);
+        if (target.IsDead())
+        {
+            CreateKOdText(target);
+        }
+    }
+
+    protected void DoAccumulatedDamage(int damage, ref int total, bool crit, BattleUnit target)
+    {
+        target.DamageUnit(damage);
+        total += damage;
+        CreateHitParticle(target);
+        CreateDamageText(target, damage, crit);
+        if (target.IsDead())
+        {
+            CreateKOdText(target);
+        }
+    }
 }
