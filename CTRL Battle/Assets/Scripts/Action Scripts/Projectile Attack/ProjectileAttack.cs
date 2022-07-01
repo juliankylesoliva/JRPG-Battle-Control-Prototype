@@ -51,6 +51,7 @@ public class ProjectileAttack : ActionScript
                 // Damage the target unit and add it to the total
                 targetUnits[0].DamageUnit(damage);
                 totalDamage += damage;
+                CreateHitParticle(targetUnits[0]);
                 CreateDamageText(targetUnits[0], damage, crit);
             }
 

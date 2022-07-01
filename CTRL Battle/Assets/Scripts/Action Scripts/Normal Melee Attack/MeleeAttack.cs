@@ -46,6 +46,7 @@ public class MeleeAttack : ActionScript
         targetUnits[0].DamageUnit(damage);
         float afterHPRatio = GetCurrentHPRatio(targetUnits[0]);
         CreateMeter(targetUnits[0], beforeHPRatio, afterHPRatio, false);
+        CreateHitParticle(targetUnits[0]);
         CreateDamageText(targetUnits[0], damage, crit);
         if (targetUnits[0].IsDead())
         {

@@ -141,6 +141,11 @@ public abstract class ActionScript : MonoBehaviour
         MeterPopup.Create(GetPositionAboveUnit(target), startRatio, endRatio, isMP, 0.25f);
     }
 
+    protected void CreateHitParticle(BattleUnit target)
+    {
+        Instantiate(ParticleMaker.GetParticle("HitParticle"), target.transform.position, Quaternion.identity);
+    }
+
     protected IEnumerator TimedAnnouncement(string message)
     {
         yield return StartCoroutine(TextPopups.AnnounceForSeconds(message, 1f));
