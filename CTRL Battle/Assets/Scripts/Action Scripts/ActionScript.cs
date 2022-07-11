@@ -87,6 +87,16 @@ public abstract class ActionScript : MonoBehaviour
         FloatingTextPopup.Create(GetPositionAboveUnit(target), "KO'd!", Color.red, 9f, 1f);
     }
 
+    protected void CreateWeaknessText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "WEAKNESS!", Color.blue, 9f, 1f);
+    }
+
+    protected void CreateResistanceText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "RESISTED", Color.gray, 6f, 1f);
+    }
+
     protected void CreateTotalDamageText(BattleUnit target, int damage)
     {
         FloatingTextPopup.Create(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 9f, 1f);
@@ -118,12 +128,42 @@ public abstract class ActionScript : MonoBehaviour
         yield return new WaitForSeconds(time);
     }
 
-    protected void ApplyDamageMods(ref int damage, bool isCrit, BattleUnit source, BattleUnit target)
+    protected IEnumerator AttackAllPlayersCamera(float time = 0f)
+    {
+        CameraSwitcher.ChangeToCamera("AllPlayersCamBehind");
+        yield return new WaitForSeconds(time);
+    }
+
+    protected IEnumerator AttackAllEnemiesCamera(float time = 0f)
+    {
+        CameraSwitcher.ChangeToCamera("AllEnemiesCam");
+        yield return new WaitForSeconds(time);
+    }
+
+    protected IEnumerator AttackAllUnitsCamera(float time = 0f)
+    {
+        CameraSwitcher.ChangeToCamera("OverviewCamera");
+        yield return new WaitForSeconds(time);
+    }
+
+    protected void ApplyDamageMods(ref int damage, bool isCrit, bool isWeak, bool isResist, BattleUnit source, BattleUnit target)
     {
         if (isCrit)
         {
             damage *= 2;
             CreateCritText(target);
+        }
+
+        if (isWeak)
+        {
+            damage *= 2;
+            CreateWeaknessText(target);
+        }
+
+        if (isResist)
+        {
+            damage /= 2;
+            CreateResistanceText(target);
         }
 
         if (target.IsGuarding)

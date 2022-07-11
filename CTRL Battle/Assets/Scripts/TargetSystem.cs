@@ -38,7 +38,7 @@ public class TargetSystem : MonoBehaviour
                 AnnounceTarget();
             }
 
-            // If the player clicks on a valid unit, confirm the action with the battle system by sending the target(s).
+            // If the player clicks on a valid unit, confirm the action with the battle system by sending the source(s) and target(s).
             CheckMouseTargetSelect();
         }
         else

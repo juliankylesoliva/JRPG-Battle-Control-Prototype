@@ -21,11 +21,11 @@ public class BattleCalculator : MonoBehaviour
         {
             if (IsEarthDamage(parameters))
             {
-                
+                return (int)((float)parameters.Power * CalculateAttackDefenseRatio(attacker.MagicAttack, defender.Defense) * CalculateDeviation());
             }
             else
             {
-
+                return (int)((float)parameters.Power * CalculateAttackDefenseRatio(attacker.MagicAttack, defender.Resistance) * CalculateDeviation());
             }
         }
         else { /* Nothing */ }
@@ -70,7 +70,7 @@ public class BattleCalculator : MonoBehaviour
 
     public static bool IsCrit(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
     {
-        return !attacker.IsGuarding && RollRNG(CalculateCritRate(attacker, defender, parameters));
+        return !attacker.IsGuarding && (parameters.AlwaysCrits || (parameters.CanCrit && RollRNG(CalculateCritRate(attacker, defender, parameters))));
     }
 
     private static int CalculateCritRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)

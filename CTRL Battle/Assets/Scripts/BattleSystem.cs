@@ -434,6 +434,14 @@ public class BattleSystem : MonoBehaviour
         return UnitSlotCode.NONE;
     }
 
+    // Public function for finding out if a unit is an enemy or not
+    public bool IsUnitAnEnemy(BattleUnit unit)
+    {
+        UnitSlotCode usc = GetSlotCodeFromUnit(unit);
+        string code = usc.ToString();
+        return code[0] == 'E';
+    }
+
     // Public helper function for getting the current unit's turn
     public BattleUnit GetCurrentUnit()
     {

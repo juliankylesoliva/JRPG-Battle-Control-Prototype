@@ -57,6 +57,17 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
+  - m_From: AllTargetCam
+    m_To: OverviewCamera
+    m_Blend:
+      m_Style: 6
+      m_Time: 0.1
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
   - m_From: PlayerTargetCam
     m_To: '**ANY CAMERA**'
     m_Blend:
@@ -125,6 +136,17 @@ MonoBehaviour:
         m_RotationOrder: 0
   - m_From: EnemyTargetCam
     m_To: E5Cam
+    m_Blend:
+      m_Style: 6
+      m_Time: 0.1
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: EnemyTargetCam
+    m_To: AllEnemiesCam
     m_Blend:
       m_Style: 6
       m_Time: 0.1
@@ -235,6 +257,17 @@ MonoBehaviour:
         m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
     m_To: P4CamBehind
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.5
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: '**ANY CAMERA**'
+    m_To: AllPlayersBehind
     m_Blend:
       m_Style: 1
       m_Time: 0.5

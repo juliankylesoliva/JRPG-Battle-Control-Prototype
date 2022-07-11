@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
   m_Name: Guard_Params
   m_EditorClassIdentifier: 
+  actionName: Guard
   damageType: 10
   targetMode: 0
   targetStatus: 0
   power: 0
+  checkHitRate: 0
   basePrecision: 0
   precisionDelta: 0
+  alwaysCrits: 0
+  canCrit: 0
   baseCritChance: 0
   critChanceDelta: 0

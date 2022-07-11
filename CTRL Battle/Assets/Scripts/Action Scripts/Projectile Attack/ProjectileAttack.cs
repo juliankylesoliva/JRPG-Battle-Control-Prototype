@@ -35,8 +35,14 @@ public class ProjectileAttack : ActionScript
                 // Check for crit
                 bool crit = BattleCalculator.IsCrit(user, target, actionParameters);
 
+                // Check weakness hit
+                bool weak = target.CheckWeakness(actionParameters.Type);
+
+                // Check resistance hit
+                bool resist = target.CheckResistance(actionParameters.Type);
+
                 // Apply damage mods
-                ApplyDamageMods(ref damage, crit, user, target);
+                ApplyDamageMods(ref damage, crit, weak, resist, user, target);
 
                 // Damage the target unit and add it to the total
                 DoAccumulatedDamage(damage, ref totalDamage, crit, target);

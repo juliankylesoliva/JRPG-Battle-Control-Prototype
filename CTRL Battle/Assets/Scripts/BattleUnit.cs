@@ -116,6 +116,13 @@ public class BattleUnit : MonoBehaviour
         set { SKL = StatValueRangeHelper(value, 1); }
     }
 
+    [Header("DAMAGE AFFINITY INFO")]
+
+    [SerializeField] DamageType[] weaknesses;
+    [SerializeField] DamageType[] resistances;
+    [SerializeField] DamageType[] immunities;
+    [SerializeField] DamageType[] absorbances;
+
     [Header("SKILL INFO")]
 
     [SerializeField] string meleeAction = "MeleeAttack";
@@ -152,6 +159,66 @@ public class BattleUnit : MonoBehaviour
     public bool IsDead()
     {
         return CurrentHP <= 0;
+    }
+
+    public bool CheckWeakness(DamageType type)
+    {
+        if (type != DamageType.NONE)
+        {
+            foreach (DamageType weak in weaknesses)
+            {
+                if (weak == type)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CheckResistance(DamageType type)
+    {
+        if (type != DamageType.NONE)
+        {
+            foreach (DamageType resist in resistances)
+            {
+                if (resist == type)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CheckImmunity(DamageType type)
+    {
+        if (type != DamageType.NONE)
+        {
+            foreach (DamageType immune in immunities)
+            {
+                if (immune == type)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool CheckAbsorbance(DamageType type)
+    {
+        if (type != DamageType.NONE)
+        {
+            foreach (DamageType absorb in absorbances)
+            {
+                if (absorb == type)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /* SETTER FUNCTIONS */

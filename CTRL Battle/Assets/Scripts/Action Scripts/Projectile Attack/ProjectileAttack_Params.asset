@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
   m_Name: ProjectileAttack_Params
   m_EditorClassIdentifier: 
+  actionName: Projectile Attack
   damageType: 3
   targetMode: 3
   targetStatus: 0

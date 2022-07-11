@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
   m_Name: MeleeAttack_Params
   m_EditorClassIdentifier: 
+  actionName: Melee Attack
   damageType: 0
   targetMode: 3
   targetStatus: 0

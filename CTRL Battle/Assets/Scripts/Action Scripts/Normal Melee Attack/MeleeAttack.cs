@@ -29,7 +29,7 @@ public class MeleeAttack : ActionScript
         bool crit = BattleCalculator.IsCrit(user, target, actionParameters);
 
         // Apply any applicable damage modifiers
-        ApplyDamageMods(ref damage, crit, user, target);
+        ApplyDamageMods(ref damage, crit, false, false, user, target);
 
         // Apply the calculated damage to the target unit
         DoSingleHitDamage(damage, crit, target);
