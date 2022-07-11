@@ -78,7 +78,7 @@ public abstract class ActionScript : MonoBehaviour
         battleSystem.EndOfTurn();
     }
 
-    public abstract IEnumerator DoAction(); // Create a new script that inherits this class and override this function.
+    protected abstract IEnumerator DoAction(); // Create a new script that inherits this class and override this function.
 
     protected WaitForSeconds WaitASec = new WaitForSeconds(1f);
 
@@ -141,9 +141,9 @@ public abstract class ActionScript : MonoBehaviour
         MeterPopup.Create(GetPositionAboveUnit(target), startRatio, endRatio, isMP, 0.25f);
     }
 
-    protected void CreateHitParticle(BattleUnit target)
+    protected void CreateMeleeHitParticle(BattleUnit target)
     {
-        Instantiate(ParticleMaker.GetParticle("HitParticle"), target.transform.position, Quaternion.identity);
+        Instantiate(ParticleMaker.GetParticle("MeleeHitParticle"), target.transform.position, Quaternion.identity);
     }
 
     protected IEnumerator TimedAnnouncement(string message)
@@ -178,7 +178,7 @@ public abstract class ActionScript : MonoBehaviour
         target.DamageUnit(damage);
         float afterHPRatio = GetCurrentHPRatio(target);
         CreateMeter(target, beforeHPRatio, afterHPRatio, false);
-        CreateHitParticle(target);
+        CreateMeleeHitParticle(target);
         CreateDamageText(target, damage, crit);
         if (target.IsDead())
         {
@@ -190,7 +190,7 @@ public abstract class ActionScript : MonoBehaviour
     {
         target.DamageUnit(damage);
         total += damage;
-        CreateHitParticle(target);
+        CreateMeleeHitParticle(target);
         CreateDamageText(target, damage, crit);
         if (target.IsDead())
         {

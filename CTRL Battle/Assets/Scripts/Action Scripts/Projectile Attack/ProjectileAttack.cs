@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileAttack : ActionScript
 {
-    public override IEnumerator DoAction()
+    protected override IEnumerator DoAction()
     {
         BattleUnit user = sourceUnits[0];
         BattleUnit target = targetUnits[0];
