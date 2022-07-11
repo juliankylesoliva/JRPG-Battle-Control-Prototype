@@ -11,7 +11,23 @@ public class GenericAttackAction : ActionScript
 
         // Attack announcement
         yield return StartCoroutine(AttackCamera(user, 0.5f));
-        yield return StartCoroutine(TimedAnnouncement($"{user.CharacterName} used {actionParameters.ActionName}!"));
+
+        // Spend MP Cost
+        if (user.Magic < actionParameters.MagicCost)
+        {
+            yield return StartCoroutine(TimedAnnouncement("Not enough MP!"));
+            yield break;
+        }
+        user.SpendMagic(actionParameters.MagicCost);
+
+        if (actionParameters.UseActionNameAsMessage)
+        {
+            yield return StartCoroutine(TimedAnnouncement($"{actionParameters.ActionNameInMessage}!"));
+        }
+        else
+        {
+            yield return StartCoroutine(TimedAnnouncement($"{user.CharacterName} {actionParameters.ActionVerb}{(actionParameters.ActionNameInMessage.Length > 0 ? " ": "")}{actionParameters.ActionNameInMessage}!"));
+        }
 
         // Do a camera change depending on the target mode
         switch (actionParameters.TargetMode)
@@ -21,25 +37,15 @@ public class GenericAttackAction : ActionScript
                 yield return StartCoroutine(AttackCamera(target, 0.5f));
                 break;
             case TargetingMode.ALL_TEAMMATE:
-                // Check if target is an enemy or not
-                if (!battleSystem.IsUnitAnEnemy(target))
-                {
-                    yield return StartCoroutine(AttackAllPlayersCamera(0.5f));
-                }
-                else
-                {
-                    yield return StartCoroutine(AttackAllEnemiesCamera(0.5f));
-                }
-                break;
             case TargetingMode.ALL_ENEMY:
                 // Check if target is an enemy or not
                 if (!battleSystem.IsUnitAnEnemy(target))
                 {
-                    yield return StartCoroutine(AttackAllEnemiesCamera(0.5f));
+                    yield return StartCoroutine(AttackAllPlayersCamera(0.5f));
                 }
                 else
                 {
-                    yield return StartCoroutine(AttackAllPlayersCamera(0.5f));
+                    yield return StartCoroutine(AttackAllEnemiesCamera(0.5f));
                 }
                 break;
             case TargetingMode.ALL_UNITS:

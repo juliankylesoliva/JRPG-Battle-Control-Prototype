@@ -224,12 +224,26 @@ public class BattleUnit : MonoBehaviour
     /* SETTER FUNCTIONS */
     public void DamageUnit(int damage)
     {
+        if (damage <= 0) { return; }
         Health -= damage;
     }
 
     public void HealUnit(int heal)
     {
+        if (heal <= 0) { return; }
         Health += heal;
+    }
+
+    public void SpendMagic(int cost)
+    {
+        if (cost <= 0) { return; }
+        Magic -= cost;
+    }
+
+    public void RestoreMagic(int restore)
+    {
+        if (restore <= 0) { return; }
+        Magic += restore;
     }
 
     public void FireAmmo()

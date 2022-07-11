@@ -10,6 +10,18 @@ public class ActionParams : ScriptableObject
     [SerializeField] string actionName = "Action Name";
     public string ActionName { get { return actionName; } }
 
+    [SerializeField] int magicCost = 0;
+    public int MagicCost { get { return magicCost; } }
+
+    [SerializeField] bool useActionNameAsMessage = false;
+    public bool UseActionNameAsMessage { get { return useActionNameAsMessage; } }
+
+    [SerializeField] string actionNameInMessage = "";
+    public string ActionNameInMessage { get { return actionNameInMessage; } }
+
+    [SerializeField] string actionVerb = "used";
+    public string ActionVerb { get { return actionVerb; } }
+
     [SerializeField] DamageType damageType = DamageType.NONE;
     public DamageType Type { get { return damageType; } }
 
@@ -19,7 +31,7 @@ public class ActionParams : ScriptableObject
     [SerializeField] UnitTargetStatus targetStatus = UnitTargetStatus.EITHER;
     public UnitTargetStatus TargetStatus { get { return targetStatus; } }
 
-    [SerializeField, Range(0, 100)] int power = 10;
+    [SerializeField, Range(0, 200)] int power = 10;
     public int Power { get { return power; } }
 
     [SerializeField] bool checkHitRate = true;

@@ -47,7 +47,7 @@ public class BattleMenu : MonoBehaviour
             if (currentMenuState == MenuState.HOME) // Initiate Melee attack
             {
                 // NOTE: Melee action script used here may depend on a character's weapon in the future.
-                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName(battleSystem.GetCurrentUnit().Melee));
+                battleSystem.SelectAction(ActionMasterList.GetGenericAttackWithParameterName(battleSystem.GetCurrentUnit().Melee));
                 GoToNextMenu(MenuState.TARGET_MODE);
             }
             else if (currentMenuState == MenuState.GUARD_CONFIRMATION) // Confirm Guard

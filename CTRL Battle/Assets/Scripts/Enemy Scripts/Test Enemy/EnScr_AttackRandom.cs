@@ -6,7 +6,7 @@ public class EnScr_AttackRandom : EnemyScript
 {
     public override void ActivateEnemy()
     {
-        ActionScript chosenAction = ActionMasterList.GetActionScriptByName("MeleeAttack");
+        ActionScript chosenAction = ActionMasterList.GetGenericAttackWithParameterName("Melee Attack");
         battleSystem.SelectAction(chosenAction);
 
         BattleUnit chosenTarget;

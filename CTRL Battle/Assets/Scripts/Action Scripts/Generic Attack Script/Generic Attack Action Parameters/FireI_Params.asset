@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
-  m_Name: MeleeAttack_Params
+  m_Name: FireI_Params
   m_EditorClassIdentifier: 
-  actionName: Melee Attack
+  actionName: Fire I
+  magicCost: 4
   useActionNameAsMessage: 0
-  actionNameInMessage: 
-  actionVerb: attacked
-  damageType: 0
+  actionNameInMessage: Fire I
+  actionVerb: casted
+  damageType: 4
   targetMode: 3
   targetStatus: 0
-  power: 10
+  power: 20
   checkHitRate: 1
-  basePrecision: 90
-  precisionDelta: 0.33333334
+  basePrecision: 85
+  precisionDelta: 0.25
   alwaysCrits: 0
   canCrit: 1
-  baseCritChance: 5
-  critChanceDelta: 0.2
+  baseCritChance: 8
+  critChanceDelta: 0.125
   isMultiHit: 0
   minHits: 1
   maxHits: 1

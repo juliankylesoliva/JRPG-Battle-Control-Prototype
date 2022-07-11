@@ -159,10 +159,10 @@ MonoBehaviour:
   COM: 1
   SKL: 1
   weaknesses: 
-  resistances: 03000000
+  resistances: 
   immunities: 
   absorbances: 
-  meleeAction: MeleeAttack
+  meleeAction: Melee Attack
   projectileAction: ProjectileAttack
   ammoLoaded: 0
   maxAmmo: 0

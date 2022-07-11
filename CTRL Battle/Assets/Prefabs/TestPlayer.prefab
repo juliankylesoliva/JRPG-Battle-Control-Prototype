@@ -157,6 +157,12 @@ MonoBehaviour:
   CHA: 3
   COM: 3
   SKL: 3
+  weaknesses: 
+  resistances: 
+  immunities: 
+  absorbances: 
+  meleeAction: Melee Attack
+  projectileAction: ProjectileAttack
   ammoLoaded: 6
   maxAmmo: 6
   reloadRate: 1
