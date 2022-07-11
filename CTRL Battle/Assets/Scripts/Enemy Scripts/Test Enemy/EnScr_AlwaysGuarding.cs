@@ -7,7 +7,7 @@ public class EnScr_AlwaysGuarding : EnemyScript
     public override void ActivateEnemy()
     {
         ActionScript chosenAction = ActionMasterList.GetActionScriptByName("Guard");
-        battleSystem.SelectAction(chosenAction, new BattleUnit[] { selfUnit });
-        battleSystem.StartAction();
+        battleSystem.SelectAction(chosenAction);
+        battleSystem.StartAction(new BattleUnit[] { selfUnit });
     }
 }

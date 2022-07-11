@@ -136,12 +136,12 @@ public class TargetSystem : MonoBehaviour
                             case TargetingMode.ALL_TEAMMATE:
                             case TargetingMode.ALL_ENEMY:
                             case TargetingMode.ALL_UNITS:
-                                battleSystem.StartAction(validUnits);
+                                battleSystem.StartAction(new BattleUnit[] { battleSystem.GetCurrentUnit() }, validUnits);
                                 break;
                             case TargetingMode.SELF:
                             case TargetingMode.SINGLE_TEAMMATE:
                             case TargetingMode.SINGLE_ENEMY:
-                                battleSystem.StartAction(new BattleUnit[] {b});
+                                battleSystem.StartAction(new BattleUnit[] { battleSystem.GetCurrentUnit() }, new BattleUnit[] {b});
                                 break;
                             case TargetingMode.NONE:
                             default:

@@ -7,7 +7,7 @@ public class EnScr_AttackRandom : EnemyScript
     public override void ActivateEnemy()
     {
         ActionScript chosenAction = ActionMasterList.GetActionScriptByName("MeleeAttack");
-        battleSystem.SelectAction(chosenAction, new BattleUnit[] {selfUnit});
+        battleSystem.SelectAction(chosenAction);
 
         BattleUnit chosenTarget;
         UnitSlotCode[] possibleTargets;
@@ -28,6 +28,6 @@ public class EnScr_AttackRandom : EnemyScript
             chosenTarget = battleSystem.GetUnitFromSlotCode(possibleTargets[Random.Range(0, possibleTargets.Length)]);
         } while (chosenTarget == null || chosenTarget.IsDead());
 
-        battleSystem.StartAction(new BattleUnit[] {chosenTarget});
+        battleSystem.StartAction(new BattleUnit[] { selfUnit }, new BattleUnit[] {chosenTarget});
     }
 }

@@ -33,7 +33,7 @@ public class BattleMenu : MonoBehaviour
         {
             if (currentMenuState == MenuState.HOME) // Initiate Guard
             {
-                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("Guard"), new BattleUnit[] {battleSystem.GetCurrentUnit()});
+                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName("Guard"));
                 GoToNextMenu(MenuState.GUARD_CONFIRMATION);
             }
             else // Go back
@@ -47,12 +47,12 @@ public class BattleMenu : MonoBehaviour
             if (currentMenuState == MenuState.HOME) // Initiate Melee attack
             {
                 // NOTE: Melee action script used here may depend on a character's weapon in the future.
-                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName(battleSystem.GetCurrentUnit().Melee), new BattleUnit[] {battleSystem.GetCurrentUnit()});
+                battleSystem.SelectAction(ActionMasterList.GetActionScriptByName(battleSystem.GetCurrentUnit().Melee));
                 GoToNextMenu(MenuState.TARGET_MODE);
             }
             else if (currentMenuState == MenuState.GUARD_CONFIRMATION) // Confirm Guard
             {
-                battleSystem.StartAction();
+                battleSystem.StartAction(new BattleUnit[] { battleSystem.GetCurrentUnit() });
             }
             else {/* Nothing */}
         }
@@ -62,7 +62,7 @@ public class BattleMenu : MonoBehaviour
             {
                 if (UnitHasAmmo())
                 {
-                    battleSystem.SelectAction(ActionMasterList.GetActionScriptByName(battleSystem.GetCurrentUnit().Projectile), new BattleUnit[] { battleSystem.GetCurrentUnit() });
+                    battleSystem.SelectAction(ActionMasterList.GetActionScriptByName(battleSystem.GetCurrentUnit().Projectile));
                     GoToNextMenu(MenuState.TARGET_MODE);
                 }
                 else

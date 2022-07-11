@@ -316,17 +316,11 @@ public class BattleSystem : MonoBehaviour
     }
 
     // Public functions for selecting/deselecting/starting/getting the current action
-    public void SelectAction(ActionScript action, BattleUnit[] sources = null)
+    public void SelectAction(ActionScript action)
     {
         if (currentAction == null)
         {
             currentAction = action;
-            currentAction.InitiateAction();
-
-            if (sources != null)
-            {
-                currentAction.SetSourceUnits(sources);
-            }
         }
     }
 
@@ -334,21 +328,27 @@ public class BattleSystem : MonoBehaviour
     {
         if (currentAction != null)
         {
-            currentAction.CancelAction();
+            currentAction.SetSourceUnits(null);
+            currentAction.SetTargetUnits(null);
             currentAction = null;
         }
     }
 
-    public void StartAction(BattleUnit[] targets = null)
+    public void StartAction(BattleUnit[] sources = null, BattleUnit[] targets = null)
     {
         if (currentAction != null)
         {
+            if (sources != null)
+            {
+                currentAction.SetSourceUnits(sources);
+            }
+
             if (targets != null)
             {
                 currentAction.SetTargetUnits(targets);
             }
 
-            currentAction.ConfirmAction();
+            currentAction.StartAction();
             battleMenu.ClearStackStandby();
             currentAction = null;
         }

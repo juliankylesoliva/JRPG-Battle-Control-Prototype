@@ -8,10 +8,6 @@ public abstract class ActionScript : MonoBehaviour
 
     protected BattleSystem battleSystem;
 
-    private bool isWaiting = false;
-    private bool isActionCancelled = false;
-    private bool isActionConfirmed = false;
-
     protected BattleUnit[] sourceUnits = null;
     protected BattleUnit[] targetUnits = null;
 
@@ -20,19 +16,9 @@ public abstract class ActionScript : MonoBehaviour
         battleSystem = GameObject.Find("BattleSystem").GetComponent<BattleSystem>();
     }
 
-    public void InitiateAction()
+    public void StartAction()
     {
-        StartCoroutine(WaitForConfirmation());
-    }
-
-    public void CancelAction()
-    {
-        if (isWaiting && !isActionCancelled && !isActionConfirmed) { isActionCancelled = true; }
-    }
-
-    public void ConfirmAction()
-    {
-        if (isWaiting && !isActionCancelled && !isActionConfirmed) { isActionConfirmed = true; }
+        StartCoroutine(InitiateAction());
     }
 
     public void SetSourceUnits(BattleUnit[] units)
@@ -45,33 +31,8 @@ public abstract class ActionScript : MonoBehaviour
         targetUnits = units;
     }
 
-    private IEnumerator WaitForConfirmation()
+    private IEnumerator InitiateAction()
     {
-        isActionCancelled = false;
-        isActionConfirmed = false;
-        sourceUnits = null;
-        targetUnits = null;
-        isWaiting = true;
-
-        while (!isActionConfirmed)
-        {
-            isWaiting = true;
-            if (isActionCancelled)
-            {
-                isActionCancelled = false;
-                isWaiting = false;
-                sourceUnits = null;
-                targetUnits = null;
-                yield break;
-            }
-            else
-            {
-                yield return null;
-            }
-        }
-
-        isActionConfirmed = false;
-        isWaiting = false;
         yield return StartCoroutine(DoAction());
         sourceUnits = null;
         targetUnits = null;
