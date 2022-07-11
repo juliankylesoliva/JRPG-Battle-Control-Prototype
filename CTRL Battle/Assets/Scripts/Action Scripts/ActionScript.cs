@@ -97,6 +97,16 @@ public abstract class ActionScript : MonoBehaviour
         FloatingTextPopup.Create(GetPositionAboveUnit(target), "RESISTED", Color.gray, 6f, 1f);
     }
 
+    protected void CreateNullifyText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "NULLIFIED", Color.gray, 6f, 1f);
+    }
+
+    protected void CreateAbsorbText(BattleUnit target)
+    {
+        FloatingTextPopup.Create(GetPositionAboveUnit(target), "ABSORBED", Color.green, 6f, 1f);
+    }
+
     protected void CreateTotalDamageText(BattleUnit target, int damage)
     {
         FloatingTextPopup.Create(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 9f, 1f);
@@ -107,6 +117,11 @@ public abstract class ActionScript : MonoBehaviour
         DamagePopup.Create(GetPositionAboveUnit(target), damage, isCrit, 1f);
     }
 
+    protected void CreateHealingText(BattleUnit target, int healing)
+    {
+        HealingPopup.Create(GetPositionAboveUnit(target), healing, 1f);
+    }
+
     protected void CreateMeter(BattleUnit target, float startRatio, float endRatio, bool isMP)
     {
         MeterPopup.Create(GetPositionAboveUnit(target), startRatio, endRatio, isMP, 0.25f);
@@ -115,6 +130,16 @@ public abstract class ActionScript : MonoBehaviour
     protected void CreateMeleeHitParticle(BattleUnit target)
     {
         Instantiate(ParticleMaker.GetParticle("MeleeHitParticle"), target.transform.position, Quaternion.identity);
+    }
+
+    protected void CreateHPHealParticle(BattleUnit target)
+    {
+        Instantiate(ParticleMaker.GetParticle("HPHealParticle"), target.transform.position, Quaternion.identity);
+    }
+
+    protected void CreateMPHealParticle(BattleUnit target)
+    {
+        Instantiate(ParticleMaker.GetParticle("MPHealParticle"), target.transform.position, Quaternion.identity);
     }
 
     protected IEnumerator TimedAnnouncement(string message)
@@ -185,6 +210,16 @@ public abstract class ActionScript : MonoBehaviour
         {
             CreateKOdText(target);
         }
+    }
+
+    protected void DoHealthRestore(int hp, BattleUnit target)
+    {
+        float beforeHPRatio = GetCurrentHPRatio(target);
+        target.HealUnit(hp);
+        float afterHPRatio = GetCurrentHPRatio(target);
+        CreateMeter(target, beforeHPRatio, afterHPRatio, false);
+        CreateHPHealParticle(target);
+        CreateHealingText(target, hp);
     }
 
     protected void DoAccumulatedDamage(int damage, ref int total, bool crit, BattleUnit target)

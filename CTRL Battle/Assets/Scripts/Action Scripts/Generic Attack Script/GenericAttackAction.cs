@@ -101,6 +101,21 @@ public class GenericAttackAction : ActionScript
                     totalDamage += damage;
                 }
 
+                // Check absorbance
+                if (target.CheckAbsorbance(actionParameters.Type))
+                {
+                    CreateAbsorbText(target);
+                    DoHealthRestore(damage, target);
+                    break;
+                }
+
+                // Check immunity
+                if (target.CheckImmunity(actionParameters.Type))
+                {
+                    CreateNullifyText(target);
+                    break;
+                }
+
                 // Calculate crit
                 bool crit = BattleCalculator.IsCrit(user, target, actionParameters);
 

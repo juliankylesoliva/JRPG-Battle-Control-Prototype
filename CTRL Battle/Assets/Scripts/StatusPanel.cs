@@ -30,7 +30,23 @@ public class StatusPanel : MonoBehaviour
     {
         nameText.text = givenUnit.CharacterName;
         hpText.text = $"{givenUnit.Health}/{givenUnit.MaxHealth}";
+        if (GetHPRatio(givenUnit) <= 0.25f)
+        {
+            hpText.color = Color.red;
+        }
+        else
+        {
+            hpText.color = Color.white;
+        }
         mpText.text = $"{givenUnit.Magic}/{givenUnit.MaxMagic}";
+        if (GetMPRatio(givenUnit) <= 0.25f)
+        {
+            mpText.color = Color.red;
+        }
+        else
+        {
+            mpText.color = Color.white;
+        }
         hpFill.localScale = new Vector3(GetHPRatio(givenUnit), 1f, 1f);
         mpFill.localScale = new Vector3(GetMPRatio(givenUnit), 1f, 1f);
     }

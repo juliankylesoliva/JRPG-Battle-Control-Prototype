@@ -71,6 +71,13 @@ public class BattleMenu : MonoBehaviour
                 }
             }
         }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (currentMenuState == MenuState.HOME)
+            {
+                GoToNextMenu(MenuState.SKILL_MENU);
+            }
+        }
         else {/* Nothing */}
     }
 
@@ -87,6 +94,9 @@ public class BattleMenu : MonoBehaviour
                 TextPopups.Announce("Guard until your next turn?");
                 break;
             case MenuState.TARGET_MODE:
+                break;
+            case MenuState.SKILL_MENU:
+                TextPopups.Announce("Select a skill!");
                 break;
             default:
                 TextPopups.Announce("");

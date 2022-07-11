@@ -32,6 +32,21 @@ public class ProjectileAttack : ActionScript
                 // Projectile damage is based on Power parameter
                 int damage = actionParameters.Power;
 
+                // Check absorbance
+                if (target.CheckAbsorbance(actionParameters.Type))
+                {
+                    CreateAbsorbText(target);
+                    DoHealthRestore(damage, target);
+                    break;
+                }
+
+                // Check immunity
+                if (target.CheckImmunity(actionParameters.Type))
+                {
+                    CreateNullifyText(target);
+                    break;
+                }
+
                 // Check for crit
                 bool crit = BattleCalculator.IsCrit(user, target, actionParameters);
 
