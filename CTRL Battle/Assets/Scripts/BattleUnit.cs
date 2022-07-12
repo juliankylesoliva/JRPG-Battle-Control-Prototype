@@ -167,6 +167,70 @@ public class BattleUnit : MonoBehaviour
         set { reloadRate = HPMPValueRangeHelper(value, 0, maxAmmo); }
     }
 
+    /* UNIT STATUS FUNCTIONS AND VARIABLES */
+    private List<Status> statusList = null;
+    private void InitializeStatusList()
+    {
+        if (statusList != null) { return; }
+        statusList = new List<Status>();
+    }
+
+    public IEnumerator AddStatus(string statusName)
+    {
+        InitializeStatusList();
+        GameObject statusPrefab = ActionMasterList.GetStatusPrefabByName(statusName);
+        if (statusPrefab == null) { yield break; }
+        GameObject tempObj = Instantiate(statusPrefab, this.transform);
+        Status statusObj = tempObj.GetComponent<Status>();
+        if (HasStatus(statusObj.StatusName)) { yield break; }
+        statusObj.SetTargetUnit(this);
+        statusList.Add(statusObj);
+        yield return StartCoroutine(statusObj.ApplyStatus());
+    }
+
+    public IEnumerator RemoveStatus(string statusName)
+    {
+        InitializeStatusList();
+        Status statusObj = GetStatus(statusName);
+        if (statusObj != null)
+        {
+            yield return StartCoroutine(statusObj.RemoveStatus());
+            GameObject.Destroy(statusObj.gameObject);
+        }
+        yield return null;
+    }
+
+    public IEnumerator ResolveStatuses(ResolveType resolve)
+    {
+        InitializeStatusList();
+        foreach (Status status in statusList)
+        {
+            if (status.ResolveDuring == resolve)
+            {
+                yield return StartCoroutine(status.DoStatus());
+            }
+        }
+        yield return null;
+    }
+
+    public bool HasStatus(string statusName)
+    {
+        return GetStatus(statusName) != null;
+    }
+
+    private Status GetStatus(string statusName)
+    {
+        InitializeStatusList();
+        foreach (Status status in statusList)
+        {
+            if (status.StatusName == statusName)
+            {
+                return status;
+            }
+        }
+        return null;
+    }
+
     /* GETTER FUNCTIONS */
     public bool IsDead()
     {

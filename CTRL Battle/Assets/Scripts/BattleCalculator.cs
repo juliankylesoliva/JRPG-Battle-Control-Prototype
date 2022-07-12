@@ -87,7 +87,7 @@ public class BattleCalculator : MonoBehaviour
 
     public static bool IsCrit(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
     {
-        return !attacker.IsGuarding && (parameters.AlwaysCrits || (parameters.CanCrit && RollRNG(CalculateCritRate(attacker, defender, parameters))));
+        return !defender.IsGuarding && (parameters.AlwaysCrits || (parameters.CanCrit && RollRNG(CalculateCritRate(attacker, defender, parameters))));
     }
 
     private static int CalculateCritRate(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
@@ -111,7 +111,7 @@ public class BattleCalculator : MonoBehaviour
         }
     }
 
-    private static bool RollRNG(int percent)
+    public static bool RollRNG(int percent)
     {
         return Random.Range(0, 100) < percent;
     }

@@ -6,14 +6,17 @@ public class ActionMasterList : MonoBehaviour
 {
     [SerializeField] GameObject[] normalActionPrefabs;
     [SerializeField] ActionParams[] genericAttackActionParameters;
+    [SerializeField] GameObject[] statusObjectPrefabs;
 
     private static Dictionary<string, ActionScript> actionsList = null;
     private static Dictionary<string, ActionParams> genAtkActParamsList = null;
+    private static Dictionary<string, GameObject> statusObjectList = null;
 
     void Awake()
     {
         InitializeActionsList();
         InitializeGenericAttackActionParametersList();
+        InitializeStatusObjectList();
     }
 
     private void InitializeActionsList()
@@ -36,6 +39,17 @@ public class ActionMasterList : MonoBehaviour
         foreach (ActionParams actPar in genericAttackActionParameters)
         {
             genAtkActParamsList.Add(actPar.ActionName, actPar);
+        }
+    }
+
+    private void InitializeStatusObjectList()
+    {
+        if (statusObjectList != null) { return; }
+
+        statusObjectList = new Dictionary<string, GameObject>();
+        foreach (GameObject obj in statusObjectPrefabs)
+        {
+            statusObjectList.Add(obj.name, obj);
         }
     }
 
@@ -70,6 +84,18 @@ public class ActionMasterList : MonoBehaviour
         if (genAtkActParamsList.ContainsKey(parameterName))
         {
             return genAtkActParamsList[parameterName];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public static GameObject GetStatusPrefabByName(string statusName)
+    {
+        if (statusObjectList.ContainsKey(statusName))
+        {
+            return statusObjectList[statusName];
         }
         else
         {

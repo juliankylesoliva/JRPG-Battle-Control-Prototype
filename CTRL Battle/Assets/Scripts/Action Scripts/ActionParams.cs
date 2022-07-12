@@ -66,6 +66,15 @@ public class ActionParams : ScriptableObject
     [SerializeField, Range(1, 8)] int maxHits = 1;
     public int MaxHits { get { return maxHits; } }
 
+    [SerializeField] bool applyStatusOnHit = false;
+    public bool ApplyStatusOnHit { get { return applyStatusOnHit; } }
+
+    [SerializeField] string statusNameToApply = "None";
+    public string StatusNameToApply { get { return statusNameToApply; } }
+
+    [SerializeField, Range(0, 100)] int statusChancePercent = 10;
+    public int StatusChancePercent { get { return statusChancePercent; } }
+
     [Header("Healing Parameters")]
     [SerializeField, Range(0, 100)] int baseHealingPercentage = 20;
     public int BaseHealingPercentage { get { return baseHealingPercentage; } }

@@ -31,6 +31,6 @@ MonoBehaviour:
   isMultiHit: 0
   minHits: 1
   maxHits: 1
-  baseHealingPercentage: 20
-  maxHealingPercentage: 25
+  baseHealingPercentage: 25
+  maxHealingPercentage: 30
   healingPercentageDelta: 0.083333336

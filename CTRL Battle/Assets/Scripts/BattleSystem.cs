@@ -202,11 +202,13 @@ public class BattleSystem : MonoBehaviour
     }
 
     // Public helper function to be called by action scripts to notify the system to end the current turn
-    public void EndOfTurn()
+    public IEnumerator EndOfTurn()
     {
         EnemyCleanup();
         if (!IsBattleOver()) // Check if either side won
         {
+            yield return StartCoroutine(GetCurrentUnit().ResolveStatuses(ResolveType.END_OF_TURN));
+
             switch (currentState)
             {
                 case BattleState.PLAYER:
@@ -219,6 +221,7 @@ public class BattleSystem : MonoBehaviour
                     break;
             }
         }
+        yield return null;
     }
 
     // Helper functions for getting the next player/enemy team member's turn

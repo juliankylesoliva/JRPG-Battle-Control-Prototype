@@ -22,7 +22,7 @@ MonoBehaviour:
   targetStatus: 0
   power: 10
   checkHitRate: 1
-  basePrecision: 90
+  basePrecision: 85
   precisionDelta: 0.33333334
   alwaysCrits: 0
   canCrit: 1

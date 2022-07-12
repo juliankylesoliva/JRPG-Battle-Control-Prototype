@@ -36,7 +36,7 @@ public abstract class ActionScript : MonoBehaviour
         yield return StartCoroutine(DoAction());
         sourceUnits = null;
         targetUnits = null;
-        battleSystem.EndOfTurn();
+        StartCoroutine(battleSystem.EndOfTurn());
     }
 
     protected abstract IEnumerator DoAction(); // Create a new script that inherits this class and override this function.
@@ -210,6 +210,15 @@ public abstract class ActionScript : MonoBehaviour
         {
             CreateKOdText(target);
         }
+    }
+
+    protected IEnumerator TryForStatus(BattleUnit target)
+    {
+        if (BattleCalculator.RollRNG(actionParameters.StatusChancePercent))
+        {
+            yield return StartCoroutine(target.AddStatus(actionParameters.StatusNameToApply));
+        }
+        yield break;
     }
 
     protected void DoHealthRestore(int hp, BattleUnit target)

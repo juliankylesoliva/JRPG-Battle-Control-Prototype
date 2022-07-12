@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Enemy
-  CurrentHP: 45
-  MaxHP: 45
+  CurrentHP: 500
+  MaxHP: 500
   ATK: 14
   DEF: 7
   AGI: 10
