@@ -131,7 +131,19 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] string projectileAction = "ProjectileAttack";
     public string Projectile { get { return projectileAction; } }
 
-    // [SerializeField] string[] equippedSkillActions;
+    [SerializeField] string[] equippedSkillActions;
+
+    // Gettter functions for equippedSkillActions array
+    public string GetSkillName(int index)
+    {
+        if (index < 0 || index >= equippedSkillActions.Length) { return null; }
+        return equippedSkillActions[index];
+    }
+
+    public int GetSkillListLength()
+    {
+        return equippedSkillActions.Length;
+    }
 
     [Header("PROJECTILE STATS")]
     [SerializeField] int ammoLoaded = 6;

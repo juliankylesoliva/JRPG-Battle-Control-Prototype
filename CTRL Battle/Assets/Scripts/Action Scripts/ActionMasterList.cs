@@ -64,4 +64,16 @@ public class ActionMasterList : MonoBehaviour
             return null;
         }
     }
+
+    public static ActionParams GetParameterObjectByName(string parameterName)
+    {
+        if (genAtkActParamsList.ContainsKey(parameterName))
+        {
+            return genAtkActParamsList[parameterName];
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

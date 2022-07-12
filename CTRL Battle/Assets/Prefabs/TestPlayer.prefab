@@ -163,6 +163,9 @@ MonoBehaviour:
   absorbances: 
   meleeAction: Melee Attack
   projectileAction: ProjectileAttack
+  equippedSkillActions:
+  - Fire I
+  - Multi-Fire I
   ammoLoaded: 6
   maxAmmo: 6
   reloadRate: 1

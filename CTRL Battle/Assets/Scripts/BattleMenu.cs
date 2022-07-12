@@ -97,6 +97,7 @@ public class BattleMenu : MonoBehaviour
                 break;
             case MenuState.SKILL_MENU:
                 TextPopups.Announce("Select a skill!");
+                CameraSwitcher.ChangeToCamera($"{battleSystem.GetCurrentUnitSlotCode()}Cam");
                 break;
             default:
                 TextPopups.Announce("");
