@@ -23,4 +23,10 @@ public class SkillButton : MonoBehaviour
     {
         skillCostText.text = $"{cost} HP";
     }
+
+    public void SetTextColor(Color color)
+    {
+        skillNameText.color = color;
+        skillCostText.color = color;
+    }
 }

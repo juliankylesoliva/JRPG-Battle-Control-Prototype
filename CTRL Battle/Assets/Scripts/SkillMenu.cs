@@ -67,7 +67,9 @@ public class SkillMenu : MonoBehaviour
                 tempSkillButton.SetMPCostText(parameters.MagicCost);
 
                 Button tempButton = tempObj.GetComponent<Button>();
-                tempButton.onClick.AddListener(delegate { SkillButtonListener(skillName); });
+                bool canUnitAffordCost = currentUnit.Magic >= parameters.MagicCost;
+                tempButton.onClick.AddListener(canUnitAffordCost ? delegate { SkillButtonListener(skillName); } : NotEnoughMPListener );
+                tempSkillButton.SetTextColor(canUnitAffordCost ? Color.white : Color.gray);
             }
         }
     }
@@ -76,5 +78,10 @@ public class SkillMenu : MonoBehaviour
     {
         battleSystem.SelectAction(ActionMasterList.GetGenericAttackWithParameterName(skillName));
         battleMenu.SetToTargetMode();
+    }
+
+    private void NotEnoughMPListener()
+    {
+        TextPopups.Announce("Not enough MP!");
     }
 }

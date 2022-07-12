@@ -49,6 +49,10 @@ public class VisualBattleMenu : MonoBehaviour
         {
             UseGuardUI();
         }
+        else if (currentMenuState == MenuState.SKILL_MENU)
+        {
+            UseSkillUI();
+        }
         else if (currentMenuState == MenuState.TARGET_MODE)
         {
             UseTargetUI();
@@ -124,6 +128,29 @@ public class VisualBattleMenu : MonoBehaviour
         SpaceKey.SetActive(true);
         SpaceText.gameObject.SetActive(true);
         SpaceText.text = "CONFIRM";
+
+        WKey.SetActive(false);
+        WText.gameObject.SetActive(false);
+        AKey.SetActive(false);
+        AText.gameObject.SetActive(false);
+        SKey.SetActive(false);
+        SText.gameObject.SetActive(false);
+        DKey.SetActive(false);
+        DText.gameObject.SetActive(false);
+    }
+
+    private void UseSkillUI()
+    {
+        TabKey.SetActive(false);
+        TabText.gameObject.SetActive(false);
+        ammoText.gameObject.SetActive(false);
+
+        LShiftKey.SetActive(true);
+        LShiftText.gameObject.SetActive(true);
+        LShiftText.text = "BACK";
+
+        SpaceKey.SetActive(false);
+        SpaceText.gameObject.SetActive(false);
 
         WKey.SetActive(false);
         WText.gameObject.SetActive(false);
