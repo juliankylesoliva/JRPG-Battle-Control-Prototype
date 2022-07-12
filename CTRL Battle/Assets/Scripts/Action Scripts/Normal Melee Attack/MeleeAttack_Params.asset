@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MeleeAttack_Params
   m_EditorClassIdentifier: 
   actionName: Melee Attack
+  magicCost: 0
   useActionNameAsMessage: 0
   actionNameInMessage: 
   actionVerb: attacked
@@ -30,3 +31,6 @@ MonoBehaviour:
   isMultiHit: 0
   minHits: 1
   maxHits: 1
+  baseHealingPercentage: 0
+  maxHealingPercentage: 0
+  healingPercentageDelta: 0

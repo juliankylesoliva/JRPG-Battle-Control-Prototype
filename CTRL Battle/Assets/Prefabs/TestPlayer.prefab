@@ -180,20 +180,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Player
-  CurrentHP: 22
-  MaxHP: 22
-  ATK: 5
-  DEF: 4
-  AGI: 10
-  CurrentMP: 10
-  MaxMP: 10
-  MAG: 6
-  RES: 3
-  ACC: 8
-  BRV: 3
-  CHA: 3
-  COM: 3
-  SKL: 3
+  CurrentHP: 100
+  MaxHP: 100
+  ATK: 10
+  DEF: 8
+  AGI: 12
+  CurrentMP: 50
+  MaxMP: 50
+  MAG: 12
+  RES: 10
+  ACC: 9
+  BRV: 10
+  CHA: 10
+  COM: 10
+  SKL: 10
   weaknesses: 
   resistances: 
   immunities: 
@@ -203,6 +203,8 @@ MonoBehaviour:
   equippedSkillActions:
   - Fire I
   - Multi-Fire I
+  - Heal I
+  - Multi-Heal I
   ammoLoaded: 6
   maxAmmo: 6
   reloadRate: 1

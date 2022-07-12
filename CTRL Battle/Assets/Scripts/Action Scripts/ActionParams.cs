@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageType { BASH, SLICE, PIERCE, PROJECTILE, FIRE, WATER, EARTH, WIND, ICE, ELECTRIC, NONE }
+public enum DamageType { BASH, SLICE, PIERCE, PROJECTILE, FIRE, WATER, EARTH, WIND, ICE, ELECTRIC, HEALING, EMOTION, AILMENT, STATUS, NONE }
 
 [CreateAssetMenu(fileName = "ActionParams", menuName = "ScriptableObjects/ActionParams", order = 1)]
 public class ActionParams : ScriptableObject
 {
+    [Header("General Parameters")]
     [SerializeField] string actionName = "Action Name";
     public string ActionName { get { return actionName; } }
 
@@ -31,6 +32,7 @@ public class ActionParams : ScriptableObject
     [SerializeField] UnitTargetStatus targetStatus = UnitTargetStatus.EITHER;
     public UnitTargetStatus TargetStatus { get { return targetStatus; } }
 
+    [Header("Attack Parameters")]
     [SerializeField, Range(0, 200)] int power = 10;
     public int Power { get { return power; } }
 
@@ -63,4 +65,14 @@ public class ActionParams : ScriptableObject
 
     [SerializeField, Range(1, 8)] int maxHits = 1;
     public int MaxHits { get { return maxHits; } }
+
+    [Header("Healing Parameters")]
+    [SerializeField, Range(0, 100)] int baseHealingPercentage = 20;
+    public int BaseHealingPercentage { get { return baseHealingPercentage; } }
+
+    [SerializeField, Range(0, 100)] int maxHealingPercentage = 25;
+    public int MaxHealingPercentage { get { return maxHealingPercentage; } }
+
+    [SerializeField, Range(0f, 1f)] float healingPercentageDelta = 0.1f;
+    public float HealingPercentageDelta { get { return healingPercentageDelta; } }
 }

@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fd770bf0746262449abd83481411275, type: 3}
-  m_Name: ProjectileAttack_Params
+  m_Name: MultiHealI_Params
   m_EditorClassIdentifier: 
-  actionName: Projectile Attack
-  magicCost: 0
+  actionName: Multi-Heal I
+  magicCost: 24
   useActionNameAsMessage: 0
-  actionNameInMessage: 
-  actionVerb: used
-  damageType: 3
-  targetMode: 3
+  actionNameInMessage: Multi-Heal I
+  actionVerb: casted
+  damageType: 10
+  targetMode: 2
   targetStatus: 0
-  power: 6
-  checkHitRate: 1
-  basePrecision: 80
-  precisionDelta: 0.5
+  power: 0
+  checkHitRate: 0
+  basePrecision: 0
+  precisionDelta: 0
   alwaysCrits: 0
-  canCrit: 1
-  baseCritChance: 1
-  critChanceDelta: 0.25
+  canCrit: 0
+  baseCritChance: 0
+  critChanceDelta: 0
   isMultiHit: 0
   minHits: 1
   maxHits: 1
-  baseHealingPercentage: 0
-  maxHealingPercentage: 0
-  healingPercentageDelta: 0
+  baseHealingPercentage: 20
+  maxHealingPercentage: 25
+  healingPercentageDelta: 0.083333336

@@ -61,12 +61,30 @@ public class GenericAttackAction : ActionScript
         {
             if (currentTarget != null)
             {
-                StartCoroutine(AttackIteration(user, currentTarget));
+                switch (actionParameters.Type)
+                {
+                    case DamageType.BASH:
+                    case DamageType.SLICE:
+                    case DamageType.PIERCE:
+                    case DamageType.PROJECTILE:
+                    case DamageType.FIRE:
+                    case DamageType.WATER:
+                    case DamageType.EARTH:
+                    case DamageType.WIND:
+                    case DamageType.ICE:
+                    case DamageType.ELECTRIC:
+                        StartCoroutine(AttackIteration(user, currentTarget));
+                        break;
+                    case DamageType.HEALING:
+                        StartCoroutine(HealingIteration(user, currentTarget));
+                        break;
+                    default:
+                        break;
+                }
+                
                 yield return new WaitForSeconds(0.4f);
             }
         }
-
-        
 
         yield return WaitASec;
     }
@@ -138,5 +156,12 @@ public class GenericAttackAction : ActionScript
             yield return WaitASec;
             CreateTotalDamageText(target, totalDamage);
         }
+    }
+
+    private IEnumerator HealingIteration(BattleUnit user, BattleUnit target)
+    {
+        int healPercent = BattleCalculator.CalculateHealing(user, target, actionParameters);
+        DoHealthRestore(healPercent, target);
+        yield return null;
     }
 }

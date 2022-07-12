@@ -42,6 +42,23 @@ public class BattleCalculator : MonoBehaviour
         return Random.Range(0.85f, 1f);
     }
 
+    public static int CalculateHealing(BattleUnit user, BattleUnit target, ActionParams parameters)
+    {
+        int resultPercent = (int)((float)parameters.BaseHealingPercentage + ((float)user.Compassion * parameters.HealingPercentageDelta));
+        if (resultPercent > parameters.MaxHealingPercentage)
+        {
+            resultPercent = parameters.MaxHealingPercentage;
+        }
+
+        int resultHealing = (int)((float)target.MaxHealth * (((float)resultPercent)/100f));
+        if (resultHealing < 1)
+        {
+            resultHealing = 1;
+        }
+
+        return resultHealing;
+    }
+
     public static bool IsHit(BattleUnit attacker, BattleUnit defender, ActionParams parameters)
     {
         return attacker.IsGuarding || RollRNG(CalculateHitRate(attacker, defender, parameters));

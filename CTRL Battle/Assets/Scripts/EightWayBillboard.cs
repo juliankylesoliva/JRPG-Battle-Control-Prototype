@@ -61,7 +61,7 @@ public class EightWayBillboard : MonoBehaviour
         {
             spriteRenderer.sprite = rightBackwardSprite;
         }
-        else if (angleBetween > (BACKWARD_ANGLE_ALT - angleMargin) || angleBetween < (BACKWARD_ANGLE + angleMargin))
+        else if (angleBetween > (BACKWARD_ANGLE_ALT - angleMargin) || angleBetween < (BACKWARD_ANGLE + angleMargin)) // SignedAngle only returns values between -180 and 180 degrees
         {
             spriteRenderer.sprite = backwardSprite;
         }

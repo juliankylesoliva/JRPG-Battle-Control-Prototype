@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Guard_Params
   m_EditorClassIdentifier: 
   actionName: Guard
-  damageType: 10
+  magicCost: 0
+  useActionNameAsMessage: 0
+  actionNameInMessage: 
+  actionVerb: used
+  damageType: 14
   targetMode: 0
   targetStatus: 0
   power: 0
@@ -24,3 +28,9 @@ MonoBehaviour:
   canCrit: 0
   baseCritChance: 0
   critChanceDelta: 0
+  isMultiHit: 0
+  minHits: 1
+  maxHits: 1
+  baseHealingPercentage: 0
+  maxHealingPercentage: 0
+  healingPercentageDelta: 0
