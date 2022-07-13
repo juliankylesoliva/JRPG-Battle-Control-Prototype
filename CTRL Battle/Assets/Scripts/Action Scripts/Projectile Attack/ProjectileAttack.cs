@@ -33,7 +33,7 @@ public class ProjectileAttack : ActionScript
                 int damage = actionParameters.Power;
 
                 // Check absorbance
-                if (target.CheckAbsorbance(actionParameters.Type))
+                if (target.CheckAbsorbables(actionParameters.Type))
                 {
                     CreateAbsorbText(target);
                     DoHealthRestore(damage, target);

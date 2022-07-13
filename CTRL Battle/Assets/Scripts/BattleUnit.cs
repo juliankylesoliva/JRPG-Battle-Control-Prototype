@@ -121,11 +121,11 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] DamageType[] weaknesses;
     [SerializeField] DamageType[] resistances;
     [SerializeField] DamageType[] immunities;
-    [SerializeField] DamageType[] absorbances;
+    [SerializeField] DamageType[] absorbables;
 
     [Header("SKILL INFO")]
 
-    [SerializeField] string meleeAction = "MeleeAttack";
+    [SerializeField] string meleeAction = "Melee Attack";
     public string Melee { get { return meleeAction; } }
 
     [SerializeField] string projectileAction = "ProjectileAttack";
@@ -322,11 +322,11 @@ public class BattleUnit : MonoBehaviour
         return false;
     }
 
-    public bool CheckAbsorbance(DamageType type)
+    public bool CheckAbsorbables(DamageType type)
     {
         if (type != DamageType.NONE)
         {
-            foreach (DamageType absorb in absorbances)
+            foreach (DamageType absorb in absorbables)
             {
                 if (absorb == type)
                 {
