@@ -184,7 +184,7 @@ MonoBehaviour:
   CurrentHP: 500
   MaxHP: 500
   ATK: 14
-  DEF: 999
+  DEF: 7
   AGI: 10
   CurrentMP: 30
   MaxMP: 30
