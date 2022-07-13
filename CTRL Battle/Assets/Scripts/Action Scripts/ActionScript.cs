@@ -70,55 +70,55 @@ public abstract class ActionScript : MonoBehaviour
     protected void CreateMissText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "MISS", Color.red, 6f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "MISS", Color.red, 6f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "MISS", Color.red, 6f, 0.5f));
     }
 
     protected void CreateGuardText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "GUARD", Color.gray, 6f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "GUARD", Color.gray, 6f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "GUARD", Color.gray, 6f, 0.5f));
     }
 
     protected void CreateCritText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "CRITICAL!", Color.blue, 9f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "CRITICAL!", Color.blue, 9f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "CRITICAL!", Color.blue, 9f, 0.5f));
     }
 
     protected void CreateKOdText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "KO'd!", Color.red, 9f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "KO'd!", Color.red, 9f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "KO'd!", Color.red, 9f, 0.5f));
     }
 
     protected void CreateWeaknessText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "WEAKNESS!", Color.blue, 9f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "WEAKNESS!", Color.blue, 9f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "WEAKNESS!", Color.blue, 9f, 0.5f));
     }
 
     protected void CreateResistanceText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "RESISTED", Color.gray, 6f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "RESISTED", Color.gray, 6f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "RESISTED", Color.gray, 6f, 0.5f));
     }
 
     protected void CreateNullifyText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "NULLIFIED", Color.gray, 6f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "NULLIFIED", Color.gray, 6f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "NULLIFIED", Color.gray, 6f, 0.5f));
     }
 
     protected void CreateAbsorbText(BattleUnit target)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), "ABSORBED", Color.green, 6f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "ABSORBED", Color.green, 6f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), "ABSORBED", Color.green, 6f, 0.5f));
     }
 
     protected void CreateTotalDamageText(BattleUnit target, int damage)
     {
         //FloatingTextPopup.Create(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 9f, 1f);
-        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 9f, 1f));
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), $"{damage} TOTAL", Color.yellow, 9f, 0.8f));
     }
 
     protected void CreateDamageText(BattleUnit target, int damage, bool isCrit)

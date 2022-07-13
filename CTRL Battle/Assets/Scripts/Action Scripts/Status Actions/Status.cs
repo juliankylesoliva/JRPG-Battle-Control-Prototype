@@ -27,6 +27,11 @@ public abstract class Status : ActionScript
         targetUnit = unit;
     }
 
+    protected void CreateStatusText(BattleUnit target)
+    {
+        TextPopups.AddPopupParametersToQueue(new FloatingTextPopupParameters(GetPositionAboveUnit(target), statusName.ToUpper(), Color.red, 6f, 0.5f));
+    }
+
     protected bool RollForAilmentClear(BattleUnit affected)
     {
         return Random.Range(1, 1000) < (int)(affected.Defense * Mathf.Pow(2f, turnsActive));

@@ -208,17 +208,21 @@ public class BattleSystem : MonoBehaviour
         if (!IsBattleOver()) // Check if either side won
         {
             yield return StartCoroutine(GetCurrentUnit().ResolveStatuses(ResolveType.END_OF_TURN));
+            EnemyCleanup();
 
-            switch (currentState)
+            if (!IsBattleOver())
             {
-                case BattleState.PLAYER:
-                    GoToNextPlayerPartyMember();
-                    break;
-                case BattleState.ENEMY:
-                    GoToNextEnemyPartyMember();
-                    break;
-                default:
-                    break;
+                switch (currentState)
+                {
+                    case BattleState.PLAYER:
+                        GoToNextPlayerPartyMember();
+                        break;
+                    case BattleState.ENEMY:
+                        GoToNextEnemyPartyMember();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         yield return null;

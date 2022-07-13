@@ -7,7 +7,8 @@ public class Burn : Status
     public override IEnumerator ApplyStatus()
     {
         if (deleteFlag || targetUnit == null) { yield break; }
-        yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnit.CharacterName} got burned!", 1f));
+        //yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnit.CharacterName} got burned!", 1f));
+        CreateStatusText(targetUnit);
     }
 
     public override IEnumerator DoStatus()
@@ -17,7 +18,9 @@ public class Burn : Status
 
         int damage = targetUnit.GetPercentOfCurrentHP(15f);
         DoSingleHitDamage(damage, false, targetUnit);
-        yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnit.CharacterName} was hurt by the burn!", 1f));
+        CreateStatusText(targetUnit);
+        yield return WaitASec;
+        //yield return StartCoroutine(TextPopups.AnnounceForSeconds($"{targetUnit.CharacterName} was hurt by the burn!", 1f));
 
         if (RollForAilmentClear(targetUnit))
         {

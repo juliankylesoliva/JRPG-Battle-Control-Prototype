@@ -21,10 +21,10 @@ MonoBehaviour:
   targetMode: 4
   targetStatus: 0
   power: 15
-  checkHitRate: 0
+  checkHitRate: 1
   basePrecision: 85
   precisionDelta: 0.25
-  alwaysCrits: 1
+  alwaysCrits: 0
   canCrit: 1
   baseCritChance: 8
   critChanceDelta: 0.125

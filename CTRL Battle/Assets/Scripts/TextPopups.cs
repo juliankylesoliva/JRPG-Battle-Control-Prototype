@@ -52,20 +52,14 @@ public class TextPopups : MonoBehaviour
 
     private IEnumerator FloatingTextPopupQueueHandler()
     {
-        int heightModifier = 0;
         while (true)
         {
             if (floatingTextQueue.Count > 0)
             {
-                
-                FloatingTextPopup.Create(floatingTextQueue[0].position + (Vector3.up * (float)heightModifier), floatingTextQueue[0].text, floatingTextQueue[0].color, floatingTextQueue[0].size, floatingTextQueue[0].time);
-                yield return new WaitForSeconds(0.1f);
+                FloatingTextPopupParameters parameters = floatingTextQueue[0];
+                FloatingTextPopup.Create(parameters.position, parameters.text, parameters.color, parameters.size, parameters.time);
+                yield return new WaitForSeconds(parameters.time);
                 floatingTextQueue.RemoveAt(0);
-                heightModifier++;
-            }
-            else
-            {
-                heightModifier = 0;
             }
             yield return null;
         }
