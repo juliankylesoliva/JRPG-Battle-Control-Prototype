@@ -58,7 +58,7 @@ public class TextPopups : MonoBehaviour
             {
                 FloatingTextPopupParameters parameters = floatingTextQueue[0];
                 FloatingTextPopup.Create(parameters.position, parameters.text, parameters.color, parameters.size, parameters.time);
-                yield return new WaitForSeconds(parameters.time);
+                yield return new WaitForSeconds(parameters.time * 0.8f);
                 floatingTextQueue.RemoveAt(0);
             }
             yield return null;

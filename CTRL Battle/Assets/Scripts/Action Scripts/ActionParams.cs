@@ -14,6 +14,9 @@ public class ActionParams : ScriptableObject
     [SerializeField] int magicCost = 0;
     public int MagicCost { get { return magicCost; } }
 
+    [SerializeField, TextArea(10, 5)] string actionDescription = "";
+    public string ActionDescription { get { return actionDescription; } }
+
     [SerializeField] bool useActionNameAsMessage = false;
     public bool UseActionNameAsMessage { get { return useActionNameAsMessage; } }
 

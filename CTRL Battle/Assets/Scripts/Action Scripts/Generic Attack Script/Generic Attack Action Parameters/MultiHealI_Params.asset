@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Multi-Heal I
   magicCost: 24
+  actionDescription: 'BASE HEALING: 25% +1% every 12 COM pts (30% MAX)
+
+
+    TARGET:
+    ALL ALLIES'
   useActionNameAsMessage: 0
   actionNameInMessage: Multi-Heal I
   actionVerb: casted

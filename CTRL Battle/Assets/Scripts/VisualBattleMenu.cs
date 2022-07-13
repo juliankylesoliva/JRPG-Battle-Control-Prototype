@@ -141,6 +141,8 @@ public class VisualBattleMenu : MonoBehaviour
 
     private void UseSkillUI()
     {
+        GoInFrontOfCamera();
+
         TabKey.SetActive(false);
         TabText.gameObject.SetActive(false);
         ammoText.gameObject.SetActive(false);

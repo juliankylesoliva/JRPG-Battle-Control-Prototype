@@ -14,19 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Multi-Fire I
   magicCost: 10
+  actionDescription: 'BASE DAMAGE: 18
+
+
+    TARGET: ALL ENEMIES
+
+
+    PRECISION:
+    85% +/- 1% every 4 ACC pts above/below target''s SPD
+
+
+    CRITICAL: 6% +/- 1%
+    every 8 SKL pts above/below target''s SPD'
   useActionNameAsMessage: 0
   actionNameInMessage: Multi-Fire I
   actionVerb: casted
   damageType: 4
   targetMode: 4
   targetStatus: 0
-  power: 15
+  power: 18
   checkHitRate: 1
   basePrecision: 85
   precisionDelta: 0.25
   alwaysCrits: 0
   canCrit: 1
-  baseCritChance: 8
+  baseCritChance: 6
   critChanceDelta: 0.125
   isMultiHit: 0
   minHits: 1

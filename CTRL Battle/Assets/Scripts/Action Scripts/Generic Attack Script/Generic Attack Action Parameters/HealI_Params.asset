@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Heal I
   magicCost: 14
+  actionDescription: 'BASE HEALING: 30% +1% every 10 COM pts (35% MAX)
+
+
+    TARGET:
+    SINGLE ALLY'
   useActionNameAsMessage: 0
   actionNameInMessage: Heal I
   actionVerb: casted
@@ -31,6 +36,9 @@ MonoBehaviour:
   isMultiHit: 0
   minHits: 1
   maxHits: 1
+  applyStatusOnHit: 0
+  statusNameToApply: None
+  statusChancePercent: 10
   baseHealingPercentage: 30
   maxHealingPercentage: 35
   healingPercentageDelta: 0.1

@@ -14,6 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Fire I
   magicCost: 4
+  actionDescription: 'BASE DAMAGE: 20
+
+
+    TARGET: SINGLE ENEMY
+
+
+    PRECISION:
+    90% +/- 1% every 4 ACC pts above/below target''s SPD
+
+
+    CRITICAL: 8% +/- 1%
+    every 8 SKL pts above/below target''s SPD'
   useActionNameAsMessage: 0
   actionNameInMessage: Fire I
   actionVerb: casted

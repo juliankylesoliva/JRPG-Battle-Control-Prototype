@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class SkillMenu : MonoBehaviour
@@ -10,7 +11,8 @@ public class SkillMenu : MonoBehaviour
 
     [SerializeField] GameObject skillList;
     [SerializeField] Transform skillButtonGroup;
-    //[SerializeField] GameObject skillDescriptionBox; // GameObject --> Separate script
+    [SerializeField] GameObject skillDescriptionBox;
+    [SerializeField] TMP_Text skillDescriptionBoxText;
 
     private BattleMenu battleMenu;
     private BattleSystem battleSystem;
@@ -42,6 +44,11 @@ public class SkillMenu : MonoBehaviour
                 }
                 skillList.SetActive(false);
             }
+
+            if (skillDescriptionBox.activeSelf)
+            {
+                skillDescriptionBox.SetActive(false);
+            }
         }
     }
 
@@ -70,6 +77,18 @@ public class SkillMenu : MonoBehaviour
                 bool canUnitAffordCost = currentUnit.Magic >= parameters.MagicCost;
                 tempButton.onClick.AddListener(canUnitAffordCost ? delegate { SkillButtonListener(skillName); } : NotEnoughMPListener );
                 tempSkillButton.SetTextColor(canUnitAffordCost ? Color.white : Color.gray);
+
+                EventTrigger trigger = tempObj.GetComponent<EventTrigger>();
+                
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerEnter;
+                entry.callback.AddListener(delegate { SkillButtonHoverListener(parameters.ActionDescription); });
+                trigger.triggers.Add(entry);
+
+                EventTrigger.Entry entry2 = new EventTrigger.Entry();
+                entry2.eventID = EventTriggerType.PointerExit;
+                entry2.callback.AddListener(delegate { SkillButtonHoverExitListener(); });
+                trigger.triggers.Add(entry2);
             }
         }
     }
@@ -78,6 +97,20 @@ public class SkillMenu : MonoBehaviour
     {
         battleSystem.SelectAction(ActionMasterList.GetGenericAttackWithParameterName(skillName));
         battleMenu.SetToTargetMode();
+    }
+
+    private void SkillButtonHoverListener(string description)
+    {
+        if (!skillDescriptionBox.activeSelf)
+        {
+            skillDescriptionBox.SetActive(true);
+        }
+        skillDescriptionBoxText.text = description;
+    }
+
+    private void SkillButtonHoverExitListener()
+    {
+        skillDescriptionBox.SetActive(false);
     }
 
     private void NotEnoughMPListener()
