@@ -23,12 +23,15 @@ public class TextPopups : MonoBehaviour
 
     private static string popupText = "";
 
+    private static List<FloatingTextPopupParameters> floatingTextQueue = new List<FloatingTextPopupParameters>();
+
     void Awake()
     {
         _damagePopupPrefab = damagePopupPrefab;
         _healingPopupPrefab = healingPopupPrefab;
         _floatingTextPopupPrefab = floatingTextPopupPrefab;
         _meterPopupPrefab = meterPopupPrefab;
+        StartCoroutine(FloatingTextPopupQueueHandler());
     }
 
     void Update()
@@ -45,6 +48,37 @@ public class TextPopups : MonoBehaviour
             announceText.gameObject.SetActive(true);
             announceText.text = popupText;
         }
+    }
+
+    private IEnumerator FloatingTextPopupQueueHandler()
+    {
+        int heightModifier = 0;
+        while (true)
+        {
+            if (floatingTextQueue.Count > 0)
+            {
+                
+                FloatingTextPopup.Create(floatingTextQueue[0].position + (Vector3.up * (float)heightModifier), floatingTextQueue[0].text, floatingTextQueue[0].color, floatingTextQueue[0].size, floatingTextQueue[0].time);
+                yield return new WaitForSeconds(0.1f);
+                floatingTextQueue.RemoveAt(0);
+                heightModifier++;
+            }
+            else
+            {
+                heightModifier = 0;
+            }
+            yield return null;
+        }
+    }
+
+    public static void AddPopupParametersToQueue(FloatingTextPopupParameters parameters)
+    {
+        floatingTextQueue.Add(parameters);
+    }
+
+    public static bool IsPopupQueueEmpty()
+    {
+        return floatingTextQueue.Count <= 0;
     }
 
     public static IEnumerator AnnounceForSeconds(string text, float time = 0f)
@@ -82,5 +116,23 @@ public class TextPopups : MonoBehaviour
     public static GameObject GetMeterPopupPrefab()
     {
         return _meterPopupPrefab;
+    }
+}
+
+public class FloatingTextPopupParameters
+{
+    public Vector3 position { get; }
+    public string text { get; }
+    public Color color { get; }
+    public float size { get; }
+    public float time { get; }
+
+    public FloatingTextPopupParameters(Vector3 position, string text, Color color, float size, float time = 1f)
+    {
+        this.position = position;
+        this.text = text;
+        this.color = color;
+        this.size = size;
+        this.time = time;
     }
 }

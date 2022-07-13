@@ -34,6 +34,6 @@ MonoBehaviour:
   applyStatusOnHit: 1
   statusNameToApply: Burn
   statusChancePercent: 20
-  baseHealingPercentage: 20
-  maxHealingPercentage: 25
-  healingPercentageDelta: 0.1
+  baseHealingPercentage: 0
+  maxHealingPercentage: 0
+  healingPercentageDelta: 0

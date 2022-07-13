@@ -21,10 +21,10 @@ MonoBehaviour:
   targetMode: 4
   targetStatus: 0
   power: 15
-  checkHitRate: 1
+  checkHitRate: 0
   basePrecision: 85
   precisionDelta: 0.25
-  alwaysCrits: 0
+  alwaysCrits: 1
   canCrit: 1
   baseCritChance: 8
   critChanceDelta: 0.125
@@ -34,6 +34,6 @@ MonoBehaviour:
   applyStatusOnHit: 1
   statusNameToApply: Burn
   statusChancePercent: 10
-  baseHealingPercentage: 20
-  maxHealingPercentage: 25
-  healingPercentageDelta: 0.1
+  baseHealingPercentage: 0
+  maxHealingPercentage: 0
+  healingPercentageDelta: 0

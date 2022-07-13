@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Enemy
-  CurrentHP: 500
+  CurrentHP: 1
   MaxHP: 500
   ATK: 14
   DEF: 7
@@ -195,7 +195,7 @@ MonoBehaviour:
   CHA: 1
   COM: 1
   SKL: 1
-  weaknesses: 
+  weaknesses: 04000000
   resistances: 
   immunities: 
   absorbances: 

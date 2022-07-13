@@ -81,7 +81,13 @@ public class GenericAttackAction : ActionScript
                     default:
                         break;
                 }
-                
+
+                // Wait for queue to empty
+                while (!TextPopups.IsPopupQueueEmpty())
+                {
+                    yield return null;
+                }
+
                 yield return new WaitForSeconds(0.4f);
             }
         }
