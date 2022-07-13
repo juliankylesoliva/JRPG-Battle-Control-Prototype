@@ -129,7 +129,7 @@ public class TargetSystem : MonoBehaviour
             {
                 foreach (BattleUnit b in validUnits)
                 {
-                    if (GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject)) // The hit was on the model, not the actual gameobject
+                    if (hit.transform.parent != null && GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject)) // The hit was on the model, not the actual gameobject
                     {
                         switch (currentMode)
                         {

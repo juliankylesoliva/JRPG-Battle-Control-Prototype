@@ -195,9 +195,28 @@ public class BattleUnit : MonoBehaviour
         if (statusObj != null)
         {
             yield return StartCoroutine(statusObj.RemoveStatus());
-            GameObject.Destroy(statusObj.gameObject);
         }
         yield return null;
+    }
+
+    public void StatusCleanup()
+    {
+        bool continueDeletion;
+        do
+        {
+            continueDeletion = false;
+            for (int i = 0; i < statusList.Count; ++i)
+            {
+                Status status = statusList[i];
+                if (status.DeleteFlag)
+                {
+                    statusList.RemoveAt(i);
+                    GameObject.Destroy(status.gameObject);
+                    continueDeletion = true;
+                    break;
+                }
+            }
+        } while (continueDeletion);
     }
 
     public IEnumerator ResolveStatuses(ResolveType resolve)
@@ -210,6 +229,7 @@ public class BattleUnit : MonoBehaviour
                 yield return StartCoroutine(status.DoStatus());
             }
         }
+        StatusCleanup();
         yield return null;
     }
 
@@ -235,6 +255,26 @@ public class BattleUnit : MonoBehaviour
     public bool IsDead()
     {
         return CurrentHP <= 0;
+    }
+
+    public int GetPercentOfCurrentHP(float percent)
+    {
+        int result = (int)(CurrentHP * (percent / 100f));
+        if (result > 0)
+        {
+            return result;
+        }
+        return 1;
+    }
+
+    public int GetPercentOfMaxHP(float percent)
+    {
+        int result = (int)(MaxHP * (percent / 100f));
+        if (result > 0)
+        {
+            return result;
+        }
+        return 1;
     }
 
     public bool CheckWeakness(DamageType type)

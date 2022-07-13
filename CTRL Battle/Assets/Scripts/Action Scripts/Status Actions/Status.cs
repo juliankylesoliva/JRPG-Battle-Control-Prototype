@@ -15,6 +15,9 @@ public abstract class Status : ActionScript
     protected BattleUnit targetUnit = null;
     protected int turnsActive = 0;
 
+    protected bool deleteFlag = false;
+    public bool DeleteFlag { get { return deleteFlag; } }
+
     public abstract IEnumerator ApplyStatus();
     public abstract IEnumerator DoStatus();
     public abstract IEnumerator RemoveStatus();
@@ -24,5 +27,23 @@ public abstract class Status : ActionScript
         targetUnit = unit;
     }
 
-    protected override IEnumerator DoAction() { yield return null; }
+    protected bool RollForAilmentClear(BattleUnit affected)
+    {
+        return Random.Range(1, 1000) < (int)(affected.Defense * Mathf.Pow(2f, turnsActive));
+    }
+
+    protected bool RollForEmotionClear(BattleUnit affected)
+    {
+        return Random.Range(1, 1000) < (int)(affected.Resistance * Mathf.Pow(2f, turnsActive));
+    }
+
+    protected void FlagForDeletion()
+    {
+        deleteFlag = true;
+    }
+
+    new public void StartAction() {/* Disabled */}
+    new public void SetSourceUnits(BattleUnit[] units) {/* Disabled */}
+    new public void SetTargetUnits(BattleUnit[] units) {/* Disabled */}
+    protected override IEnumerator DoAction() { yield return null; } /* Disabled */
 }
