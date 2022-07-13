@@ -155,7 +155,7 @@ public class GenericAttackAction : ActionScript
                 // Apply the calculated damage to the target unit
                 DoSingleHitDamage(damage, crit, target);
 
-                if (actionParameters.ApplyStatusOnHit && !target.IsGuarding)
+                if (actionParameters.ApplyStatusOnHit && !target.IsDead() && !target.IsGuarding)
                 {
                     yield return StartCoroutine(TryForStatus(target));
                 }

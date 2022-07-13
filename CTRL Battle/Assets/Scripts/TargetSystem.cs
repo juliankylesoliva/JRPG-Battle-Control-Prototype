@@ -15,6 +15,9 @@ public class TargetSystem : MonoBehaviour
     private UnitTargetStatus targetStatus = UnitTargetStatus.NONE;
     private UnitSlotCode[] possibleTargetCodes = null;
     private BattleUnit[] validUnits = null;
+    private BattleUnit[] highlightedUnits = null;
+
+    private List<MeterPopup> listOfHealthbars = new List<MeterPopup>();
 
     void Awake()
     {
@@ -28,12 +31,13 @@ public class TargetSystem : MonoBehaviour
         {
             // Take a look at BattleSystem's selected skill for its targeting mode, current phase (player or enemy), required unit status, and current turn
             // Interpret those factors into an array of selectable targets
-            if (validUnits == null && possibleTargetCodes == null && targetStatus == UnitTargetStatus.NONE && currentMode == TargetingMode.NONE)
+            if (validUnits == null && highlightedUnits == null && possibleTargetCodes == null && targetStatus == UnitTargetStatus.NONE && currentMode == TargetingMode.NONE)
             {
                 currentMode = GetTargetModeFromCurrentAction();
                 targetStatus = GetTargetStatusFromCurrentAction();
                 possibleTargetCodes = GetPossibleTargets(currentMode, battleSystem.GetCurrentBattleState(), battleSystem.GetCurrentTurnIndex());
                 validUnits = GetValidUnits(targetStatus, possibleTargetCodes);
+                highlightedUnits = GetHighlightedUnits(currentMode);
                 FocusCameraOnTargets();
                 AnnounceTarget();
             }
@@ -47,7 +51,9 @@ public class TargetSystem : MonoBehaviour
             targetStatus = UnitTargetStatus.NONE;
             possibleTargetCodes = null;
             validUnits = null;
+            highlightedUnits = null;
         }
+        SpawnHealthbarsOverHighlightedTargets();
     }
 
     private bool IsTargetModeActive()
@@ -123,33 +129,65 @@ public class TargetSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 999f))
+            if (highlightedUnits != null)
             {
-                foreach (BattleUnit b in validUnits)
+                battleSystem.StartAction(new BattleUnit[] { battleSystem.GetCurrentUnit() }, highlightedUnits);
+            }
+        }
+        else
+        {
+            if (currentMode == TargetingMode.SINGLE_ENEMY || currentMode == TargetingMode.SINGLE_TEAMMATE)
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, 999f))
                 {
-                    if (hit.transform.parent != null && GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject)) // The hit was on the model, not the actual gameobject
+                    foreach (BattleUnit b in validUnits)
                     {
-                        switch (currentMode)
+                        if (hit.transform.parent != null && GameObject.ReferenceEquals(b.gameObject, hit.transform.parent.gameObject)) // The hit was on the model, not the actual gameobject
                         {
-                            case TargetingMode.ALL_TEAMMATE:
-                            case TargetingMode.ALL_ENEMY:
-                            case TargetingMode.ALL_UNITS:
-                                battleSystem.StartAction(new BattleUnit[] { battleSystem.GetCurrentUnit() }, validUnits);
-                                break;
-                            case TargetingMode.SELF:
-                            case TargetingMode.SINGLE_TEAMMATE:
-                            case TargetingMode.SINGLE_ENEMY:
-                                battleSystem.StartAction(new BattleUnit[] { battleSystem.GetCurrentUnit() }, new BattleUnit[] {b});
-                                break;
-                            case TargetingMode.NONE:
-                            default:
-                                break;
+                            highlightedUnits[0] = b;
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void SpawnHealthbarsOverHighlightedTargets()
+    {
+
+        foreach (MeterPopup meter in listOfHealthbars)
+        {
+            GameObject.Destroy(meter.gameObject);
+        }
+        listOfHealthbars.Clear();
+
+        if (highlightedUnits == null) { return; }
+
+        foreach (BattleUnit unit in highlightedUnits)
+        {
+            float hpRatio = ((float)unit.Health / (float)unit.MaxHealth);
+            MeterPopup meterTemp = MeterPopup.Create(unit.transform.position + (Vector3.up * 1.5f), hpRatio, hpRatio, false, 0f, true);
+            listOfHealthbars.Add(meterTemp);
+        }
+    }
+
+    private BattleUnit[] GetHighlightedUnits(TargetingMode mode)
+    {
+        switch (mode)
+        {
+            case TargetingMode.ALL_TEAMMATE:
+            case TargetingMode.ALL_ENEMY:
+            case TargetingMode.ALL_UNITS:
+                return validUnits;
+            case TargetingMode.SELF:
+            case TargetingMode.SINGLE_TEAMMATE:
+            case TargetingMode.SINGLE_ENEMY:
+                return new BattleUnit[] { validUnits[0] };
+            case TargetingMode.NONE:
+            default:
+                return new BattleUnit[] { };
         }
     }
 
