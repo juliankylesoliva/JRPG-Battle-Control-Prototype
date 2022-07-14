@@ -6,16 +6,19 @@ public class ActionMasterList : MonoBehaviour
 {
     [SerializeField] GameObject[] normalActionPrefabs;
     [SerializeField] ActionParams[] genericAttackActionParameters;
+    [SerializeField] ActionParams[] ctrlAttackActionParameters;
     [SerializeField] GameObject[] statusObjectPrefabs;
 
     private static Dictionary<string, ActionScript> actionsList = null;
     private static Dictionary<string, ActionParams> genAtkActParamsList = null;
+    private static Dictionary<string, ActionParams> ctrlAtkActParamsList = null;
     private static Dictionary<string, GameObject> statusObjectList = null;
 
     void Awake()
     {
         InitializeActionsList();
         InitializeGenericAttackActionParametersList();
+        InitializeCTRLAttackActionParametersList();
         InitializeStatusObjectList();
     }
 
@@ -39,6 +42,17 @@ public class ActionMasterList : MonoBehaviour
         foreach (ActionParams actPar in genericAttackActionParameters)
         {
             genAtkActParamsList.Add(actPar.ActionName, actPar);
+        }
+    }
+
+    private void InitializeCTRLAttackActionParametersList()
+    {
+        if (ctrlAtkActParamsList != null) { return; }
+
+        ctrlAtkActParamsList = new Dictionary<string, ActionParams>();
+        foreach (ActionParams actPar in ctrlAttackActionParameters)
+        {
+            ctrlAtkActParamsList.Add(actPar.ActionName, actPar);
         }
     }
 
@@ -72,6 +86,20 @@ public class ActionMasterList : MonoBehaviour
         {
             genAct.actionParameters = genAtkActParamsList[parameterName];
             return genAct;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public static ActionScript GetCTRLAttackWithParameterName(string parameterName)
+    {
+        ActionScript ctrlAtk = GetActionScriptByName("BasicCTRLAtk");
+        if (ctrlAtk != null && ctrlAtkActParamsList.ContainsKey(parameterName))
+        {
+            ctrlAtk.actionParameters = ctrlAtkActParamsList[parameterName];
+            return ctrlAtk;
         }
         else
         {

@@ -5,12 +5,7 @@ using UnityEngine.AI;
 
 public class CTRL_Movement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 12f;
-
-    void Start()
-    {
-        
-    }
+    [SerializeField] float moveSpeed = 6f;
 
     void Update()
     {

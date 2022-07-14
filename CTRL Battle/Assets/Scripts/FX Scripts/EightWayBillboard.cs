@@ -24,17 +24,6 @@ public class EightWayBillboard : MonoBehaviour
     [SerializeField] string startingSpriteName = "";
     [SerializeField] EightWaySprite[] spriteLibrary;
 
-    /*
-    [SerializeField] Sprite forwardSprite;
-    [SerializeField] Sprite forwardRightSprite;
-    [SerializeField] Sprite rightSprite;
-    [SerializeField] Sprite rightBackwardSprite;
-    [SerializeField] Sprite backwardSprite;
-    [SerializeField] Sprite backwardLeftSprite;
-    [SerializeField] Sprite leftSprite;
-    [SerializeField] Sprite leftForwardSprite;
-    */
-
     private Dictionary<string, Sprite[]> spriteDictionary = null;
     private BillboardDirection currentSpriteDirection = BillboardDirection.F;
     private Sprite[] currentSpriteList = null;

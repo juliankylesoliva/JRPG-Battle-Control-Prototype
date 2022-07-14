@@ -174,6 +174,12 @@ public abstract class ActionScript : MonoBehaviour
         yield return new WaitForSeconds(time);
     }
 
+    protected IEnumerator CTRLAttackCamera(float time = 0f)
+    {
+        CameraSwitcher.ChangeToCamera("CTRLAttackCam");
+        yield return new WaitForSeconds(time);
+    }
+
     protected IEnumerator AttackAllUnitsCamera(float time = 0f)
     {
         CameraSwitcher.ChangeToCamera("OverviewCamera");

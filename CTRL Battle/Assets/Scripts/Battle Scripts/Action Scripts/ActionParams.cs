@@ -87,4 +87,11 @@ public class ActionParams : ScriptableObject
 
     [SerializeField, Range(0f, 1f)] float healingPercentageDelta = 0.1f;
     public float HealingPercentageDelta { get { return healingPercentageDelta; } }
+
+    [Header("CTRL Attack Parameters")]
+    [SerializeField, Range(4f, 8f)] float baseAttackDuration = 4f;
+    public float BaseAttackDuration {  get { return baseAttackDuration; } }
+
+    [SerializeField] Vector2 playerSpawnLocation;
+    public Vector3 PlayerSpawnLocation { get { return new Vector3(playerSpawnLocation.x, 0.65f, playerSpawnLocation.y); } }
 }

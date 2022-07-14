@@ -267,7 +267,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
-    m_To: AllPlayersBehind
+    m_To: AllPlayersCamBehind
     m_Blend:
       m_Style: 1
       m_Time: 0.5
@@ -323,6 +323,17 @@ MonoBehaviour:
         m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
     m_To: E5Cam
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.5
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: '**ANY CAMERA**'
+    m_To: CTRLAttackCam
     m_Blend:
       m_Style: 1
       m_Time: 0.5

@@ -19,6 +19,7 @@ public class BattleSystem : MonoBehaviour
 
     // Prefab objects to spawn into the battle
     [SerializeField] GameObject[] playerPrefabs;
+    [SerializeField] GameObject[] playerCTRLPrefabs;
     [SerializeField] GameObject[] enemyPrefabs;
 
     // Transform objects to parent players and enemies to
@@ -199,6 +200,12 @@ public class BattleSystem : MonoBehaviour
         {
             return (Random.Range(0f, 1f) <= 0.5f ? BattleState.PLAYER : BattleState.ENEMY);
         }
+    }
+
+    // Public helper function for spawning in character controllers for CTRL attacks.
+    public GameObject SpawnCTRLCharacter(int index, Vector3 position)
+    {
+        return Instantiate(playerCTRLPrefabs[index], position, Quaternion.identity);
     }
 
     // Public helper function to be called by action scripts to notify the system to end the current turn

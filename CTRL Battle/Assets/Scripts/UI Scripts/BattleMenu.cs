@@ -78,6 +78,15 @@ public class BattleMenu : MonoBehaviour
                 GoToNextMenu(MenuState.SKILL_MENU);
             }
         }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (currentMenuState == MenuState.HOME)
+            {
+                //GoToNextMenu(MenuState.CTRL_MENU);
+                battleSystem.SelectAction(ActionMasterList.GetCTRLAttackWithParameterName("Basic CTRL Attack")); // Temporary
+                GoToNextMenu(MenuState.TARGET_MODE);
+            }
+        }
         else {/* Nothing */}
     }
 
