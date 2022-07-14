@@ -113,14 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleMargin: 22.5
-  forwardSprite: {fileID: 21300000, guid: 7997665d117a9e342bb56fc61829b29e, type: 3}
-  forwardRightSprite: {fileID: 21300000, guid: 90ef0f64fb633e64886d3db6606f47c3, type: 3}
-  rightSprite: {fileID: 21300000, guid: ac6ff365c6e1b664390efa45c5d810db, type: 3}
-  rightBackwardSprite: {fileID: 21300000, guid: 5dc7cea5488a6ec41a90ef879b0cc6d5, type: 3}
-  backwardSprite: {fileID: 21300000, guid: c0a79b78f43f69144b66a3f62c94716b, type: 3}
-  backwardLeftSprite: {fileID: 21300000, guid: f93c2169f5ce0144f9ced98332e44237, type: 3}
-  leftSprite: {fileID: 21300000, guid: 3f1d0b1689f589f4b9496b31f05ebcb4, type: 3}
-  leftForwardSprite: {fileID: 21300000, guid: 5ad0feb445829104eb9a849ef1c7c68b, type: 3}
+  startingSpriteName: Test
+  spriteLibrary:
+  - {fileID: 11400000, guid: fd558d049c5580c489c4a0f95ee5ef9e, type: 2}
 --- !u!65 &9069282180256119464
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -197,7 +192,7 @@ MonoBehaviour:
   weaknesses: 
   resistances: 
   immunities: 
-  absorbances: 
+  absorbables: 
   meleeAction: Melee Attack
   projectileAction: ProjectileAttack
   equippedSkillActions:

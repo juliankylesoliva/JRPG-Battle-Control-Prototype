@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BillboardDirection { F, FR, R, RB, B, BL, L, LF }
+
 public class EightWayBillboard : MonoBehaviour
 {
     private Transform parentSpriteHolder;
@@ -19,6 +21,10 @@ public class EightWayBillboard : MonoBehaviour
 
     [SerializeField, Range(0f, 22.5f)] float angleMargin = 20f;
 
+    [SerializeField] string startingSpriteName = "";
+    [SerializeField] EightWaySprite[] spriteLibrary;
+
+    /*
     [SerializeField] Sprite forwardSprite;
     [SerializeField] Sprite forwardRightSprite;
     [SerializeField] Sprite rightSprite;
@@ -27,19 +33,44 @@ public class EightWayBillboard : MonoBehaviour
     [SerializeField] Sprite backwardLeftSprite;
     [SerializeField] Sprite leftSprite;
     [SerializeField] Sprite leftForwardSprite;
+    */
+
+    private Dictionary<string, Sprite[]> spriteDictionary = null;
+    private BillboardDirection currentSpriteDirection = BillboardDirection.F;
+    private Sprite[] currentSpriteList = null;
 
     void Awake()
     {
         parentSpriteHolder = this.transform.parent;
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        InitializeSpriteDictionary();
+        SetSprite(startingSpriteName);
     }
 
     void Update()
     {
-        UpdateSprite();
+        UpdateSpriteDirection();
     }
 
-    private void UpdateSprite()
+    private void InitializeSpriteDictionary()
+    {
+        if (spriteDictionary != null) { return; }
+        spriteDictionary = new Dictionary<string, Sprite[]>();
+        foreach (EightWaySprite ews in spriteLibrary)
+        {
+            spriteDictionary.Add(ews.SpriteName, ews.SpriteList);
+        }
+    }
+
+    public void SetSprite(string spriteName)
+    {
+        if (spriteDictionary.ContainsKey(spriteName))
+        {
+            currentSpriteList = spriteDictionary[spriteName];
+        }
+    }
+
+    private void UpdateSpriteDirection()
     {
         Vector2 cameraForward = new Vector2(Camera.main.transform.forward.x, Camera.main.transform.forward.z);
         Vector2 parentForward = new Vector2(parentSpriteHolder.forward.x, parentSpriteHolder.forward.z);
@@ -47,36 +78,38 @@ public class EightWayBillboard : MonoBehaviour
 
         if (angleBetween > (FORWARD_ANGLE - angleMargin) && angleBetween < (FORWARD_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = forwardSprite;
+            currentSpriteDirection = BillboardDirection.F;
         }
         else if (angleBetween > (FORWARD_RIGHT_ANGLE - angleMargin) && angleBetween < (FORWARD_RIGHT_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = forwardRightSprite;
+            currentSpriteDirection = BillboardDirection.FR;
         }
         else if (angleBetween > (RIGHT_ANGLE - angleMargin) && angleBetween < (RIGHT_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = rightSprite;
+            currentSpriteDirection = BillboardDirection.R;
         }
         else if (angleBetween > (RIGHT_BACKWARD_ANGLE - angleMargin) && angleBetween < (RIGHT_BACKWARD_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = rightBackwardSprite;
+            currentSpriteDirection = BillboardDirection.RB;
         }
         else if (angleBetween > (BACKWARD_ANGLE_ALT - angleMargin) || angleBetween < (BACKWARD_ANGLE + angleMargin)) // SignedAngle only returns values between -180 and 180 degrees
         {
-            spriteRenderer.sprite = backwardSprite;
+            currentSpriteDirection = BillboardDirection.B;
         }
         else if (angleBetween > (BACKWARD_LEFT_ANGLE - angleMargin) && angleBetween < (BACKWARD_LEFT_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = backwardLeftSprite;
+            currentSpriteDirection = BillboardDirection.BL;
         }
         else if (angleBetween > (LEFT_ANGLE - angleMargin) && angleBetween < (LEFT_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = leftSprite;
+            currentSpriteDirection = BillboardDirection.L;
         }
         else if (angleBetween > (LEFT_FORWARD_ANGLE - angleMargin) && angleBetween < (LEFT_FORWARD_ANGLE + angleMargin))
         {
-            spriteRenderer.sprite = leftForwardSprite;
+            currentSpriteDirection = BillboardDirection.LF;
         }
         else {/* Nothing */}
+
+        spriteRenderer.sprite = currentSpriteList[(int)currentSpriteDirection];
     }
 }
